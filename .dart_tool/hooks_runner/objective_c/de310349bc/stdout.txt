@@ -1,0 +1,59 @@
+Running `(cd /Users/amrendravikramsingh/.pub-cache/hosted/pub.dev/objective_c-9.3.0/; TMPDIR=/var/folders/v5/hjtc66m16ydbpr4gzs_v5hxm0000gn/T/ PATH=/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/opt/pmk/env/global/bin:/Library/Apple/usr/bin:/opt/homebrew/bin:/Users/amrendravikramsingh/.foundry/bin:/Users/amrendravikramsingh/development/flutter/bin HOME=/Users/amrendravikramsingh /Users/amrendravikramsingh/development/flutter/bin/cache/dart-sdk/bin/dart --packages=/Users/amrendravikramsingh/Documents/Zplit/.dart_tool/package_config.json /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/objective_c/de310349bc/hook.dill --config=/Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/objective_c/de310349bc/input.json )`.
+INFO: 2026-02-25 16:55:18.690414: Running `/Library/Developer/CommandLineTools/usr/bin/clang --version`.
+
+INFO: 2026-02-25 16:55:18.913683: Running `/Library/Developer/CommandLineTools/usr/bin/clang --version`.
+
+INFO: 2026-02-25 16:55:18.922876: Running: /Library/Developer/CommandLineTools/usr/bin/clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -target arm64-apple-darwin -mmacos-version-min=13 -c /Users/amrendravikramsingh/.pub-cache/hosted/pub.dev/objective_c-9.3.0/src/include/dart_api_dl.c -fpic -I src -o /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/include/dart_api_dl.c.o
+
+INFO: 2026-02-25 16:55:18.923148: Running: /Library/Developer/CommandLineTools/usr/bin/clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -target arm64-apple-darwin -mmacos-version-min=13 -c /Users/amrendravikramsingh/.pub-cache/hosted/pub.dev/objective_c-9.3.0/src/objective_c.c -fpic -I src -o /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/objective_c.c.o
+
+INFO: 2026-02-25 16:55:18.923389: Running: /Library/Developer/CommandLineTools/usr/bin/clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -target arm64-apple-darwin -mmacos-version-min=13 -c /Users/amrendravikramsingh/.pub-cache/hosted/pub.dev/objective_c-9.3.0/test/util.c -fpic -I src -o /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/test/util.c.o
+
+INFO: 2026-02-25 16:55:18.923505: Running: /Library/Developer/CommandLineTools/usr/bin/clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -target arm64-apple-darwin -mmacos-version-min=13 -x objective-c -fobjc-arc -c /Users/amrendravikramsingh/.pub-cache/hosted/pub.dev/objective_c-9.3.0/src/input_stream_adapter.m -fpic -I src -o /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/input_stream_adapter.m.o
+
+INFO: 2026-02-25 16:55:18.923602: Running: /Library/Developer/CommandLineTools/usr/bin/clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -target arm64-apple-darwin -mmacos-version-min=13 -x objective-c -fobjc-arc -c /Users/amrendravikramsingh/.pub-cache/hosted/pub.dev/objective_c-9.3.0/src/objective_c.m -fpic -I src -o /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/objective_c.m.o
+
+INFO: 2026-02-25 16:55:18.923691: Running: /Library/Developer/CommandLineTools/usr/bin/clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -target arm64-apple-darwin -mmacos-version-min=13 -x objective-c -fobjc-arc -c /Users/amrendravikramsingh/.pub-cache/hosted/pub.dev/objective_c-9.3.0/src/observer.m -fpic -I src -o /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/observer.m.o
+
+INFO: 2026-02-25 16:55:18.923778: Running: /Library/Developer/CommandLineTools/usr/bin/clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -target arm64-apple-darwin -mmacos-version-min=13 -x objective-c -fobjc-arc -c /Users/amrendravikramsingh/.pub-cache/hosted/pub.dev/objective_c-9.3.0/src/ns_number.m -fpic -I src -o /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/ns_number.m.o
+
+INFO: 2026-02-25 16:55:18.923903: Running: /Library/Developer/CommandLineTools/usr/bin/clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -target arm64-apple-darwin -mmacos-version-min=13 -x objective-c -fobjc-arc -c /Users/amrendravikramsingh/.pub-cache/hosted/pub.dev/objective_c-9.3.0/src/protocol.m -fpic -I src -o /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/protocol.m.o
+
+INFO: 2026-02-25 16:55:18.924034: Running: /Library/Developer/CommandLineTools/usr/bin/clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -target arm64-apple-darwin -mmacos-version-min=13 -x objective-c -fobjc-arc -c /Users/amrendravikramsingh/.pub-cache/hosted/pub.dev/objective_c-9.3.0/src/objective_c_bindings_generated.m -fpic -I src -o /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/objective_c_bindings_generated.m.o
+
+INFO: 2026-02-25 16:55:19.025604: Generated /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/objective_c.c.o
+
+INFO: 2026-02-25 16:55:19.025841: 
+INFO: 2026-02-25 16:55:19.025871: 
+INFO: 2026-02-25 16:55:19.025893: Generated /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/include/dart_api_dl.c.o
+
+INFO: 2026-02-25 16:55:19.031016: Generated /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/test/util.c.o
+
+l/hooks_runner/shared/objective_c/build/de310349bc/obj/src/observer.m.o
+
+INFO: 2026-02-25 16:55:19.032826: 
+INFO: 2026-02-25 16:55:19.032962: 
+INFO: 2026-02-25 16:55:19.032994: Generated /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/protocol.m.o
+
+INFO: 2026-02-25 16:55:19.266350: 
+INFO: 2026-02-25 16:55:19.266393: 
+INFO: 2026-02-25 16:55:19.266403: Generated /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/ns_number.m.o
+
+INFO: 2026-02-25 16:55:19.272283: 
+INFO: 2026-02-25 16:55:19.272323: 
+INFO: 2026-02-25 16:55:19.272338: Generated /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/objective_c.m.o
+
+INFO: 2026-02-25 16:55:19.273136: 
+INFO: 2026-02-25 16:55:19.273153: 
+INFO: 2026-02-25 16:55:19.273162: Generated /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/input_stream_adapter.m.o
+
+INFO: 2026-02-25 16:55:19.285363: 
+INFO: 2026-02-25 16:55:19.285388: 
+INFO: 2026-02-25 16:55:19.285396: Generated /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/objective_c_bindings_generated.m.o
+
+INFO: 2026-02-25 16:55:19.285639: Running: /Library/Developer/CommandLineTools/usr/bin/clang -shared -Wl,-encryptable -undefined dynamic_lookup -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -target arm64-apple-darwin -mmacos-version-min=13 /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/include/dart_api_dl.c.o /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/objective_c.c.o /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/test/util.c.o /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/input_stream_adapter.m.o /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/objective_c.m.o /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/observer.m.o /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/ns_number.m.o /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/protocol.m.o /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/obj/src/objective_c_bindings_generated.m.o -o /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/objective_c.dylib
+
+INFO: 2026-02-25 16:55:19.495125: 
+INFO: 2026-02-25 16:55:19.495183: 
+INFO: 2026-02-25 16:55:19.495192: Generated /Users/amrendravikramsingh/Documents/Zplit/.dart_tool/hooks_runner/shared/objective_c/build/de310349bc/objective_c.dylib
+
