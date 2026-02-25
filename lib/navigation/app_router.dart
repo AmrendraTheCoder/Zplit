@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/user_provider.dart';
 import '../screens/onboarding_screen.dart';
 import '../screens/home_screen.dart';
+import '../screens/settings_screen.dart';
 import '../screens/create_group_screen.dart';
 import '../screens/group_detail_screen.dart';
 import '../screens/add_expense_screen.dart';
@@ -35,6 +36,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/create-group',
         name: 'createGroup',
         builder: (context, state) => const CreateGroupScreen(),
+      ),
+      GoRoute(
+        path: '/settings',
+        name: 'settings',
+        builder: (context, state) => const SettingsScreen(),
       ),
       GoRoute(
         path: '/group/:id',

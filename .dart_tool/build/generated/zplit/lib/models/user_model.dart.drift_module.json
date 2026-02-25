@@ -1,0 +1,9 @@
+{
+  "elements": {},
+  "imports": [
+    "package:equatable/equatable.dart",
+    "package:uuid/uuid.dart",
+    "package:zplit/theme/app_colors.dart",
+    "package:flutter/material.dart"
+  ]
+}

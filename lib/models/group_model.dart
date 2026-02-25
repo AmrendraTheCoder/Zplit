@@ -50,6 +50,17 @@ class GroupModel extends Equatable {
   /// Number of members in the group.
   int get memberCount => memberIds.length;
 
+  /// Returns a copy with an additional member.
+  GroupModel addMember(String memberId) {
+    if (memberIds.contains(memberId)) return this;
+    return copyWith(memberIds: [...memberIds, memberId]);
+  }
+
+  /// Returns a copy without the specified member.
+  GroupModel removeMember(String memberId) {
+    return copyWith(memberIds: memberIds.where((id) => id != memberId).toList());
+  }
+
   GroupModel copyWith({
     String? name,
     String? description,

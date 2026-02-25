@@ -87,7 +87,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
           opacity: _fadeIn,
           child: SlideTransition(
             position: _slideUp,
-            child: Padding(
+            child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -215,7 +215,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                     ),
                   ),
 
-                  const Spacer(),
+                  const SizedBox(height: 40),
 
                   // ── Get Started Button ──────────────────
                   SizedBox(

@@ -1,0 +1,3611 @@
+// ignore_for_file: type=lint
+class $UsersTable extends Users with TableInfo<$UsersTable, User> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $UsersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _usernameMeta = const VerificationMeta(
+    'username',
+  );
+  @override
+  late final GeneratedColumn<String> username = GeneratedColumn<String>(
+    'username',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _displayNameMeta = const VerificationMeta(
+    'displayName',
+  );
+  @override
+  late final GeneratedColumn<String> displayName = GeneratedColumn<String>(
+    'display_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _avatarRefMeta = const VerificationMeta(
+    'avatarRef',
+  );
+  @override
+  late final GeneratedColumn<String> avatarRef = GeneratedColumn<String>(
+    'avatar_ref',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _avatarColorIndexMeta = const VerificationMeta(
+    'avatarColorIndex',
+  );
+  @override
+  late final GeneratedColumn<int> avatarColorIndex = GeneratedColumn<int>(
+    'avatar_color_index',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _deviceIdMeta = const VerificationMeta(
+    'deviceId',
+  );
+  @override
+  late final GeneratedColumn<String> deviceId = GeneratedColumn<String>(
+    'device_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    username,
+    displayName,
+    avatarRef,
+    avatarColorIndex,
+    deviceId,
+    createdAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'users';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<User> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('username')) {
+      context.handle(
+        _usernameMeta,
+        username.isAcceptableOrUnknown(data['username']!, _usernameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_usernameMeta);
+    }
+    if (data.containsKey('display_name')) {
+      context.handle(
+        _displayNameMeta,
+        displayName.isAcceptableOrUnknown(
+          data['display_name']!,
+          _displayNameMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_displayNameMeta);
+    }
+    if (data.containsKey('avatar_ref')) {
+      context.handle(
+        _avatarRefMeta,
+        avatarRef.isAcceptableOrUnknown(data['avatar_ref']!, _avatarRefMeta),
+      );
+    }
+    if (data.containsKey('avatar_color_index')) {
+      context.handle(
+        _avatarColorIndexMeta,
+        avatarColorIndex.isAcceptableOrUnknown(
+          data['avatar_color_index']!,
+          _avatarColorIndexMeta,
+        ),
+      );
+    }
+    if (data.containsKey('device_id')) {
+      context.handle(
+        _deviceIdMeta,
+        deviceId.isAcceptableOrUnknown(data['device_id']!, _deviceIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_deviceIdMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  User map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return User(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      username: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}username'],
+      )!,
+      displayName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}display_name'],
+      )!,
+      avatarRef: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}avatar_ref'],
+      ),
+      avatarColorIndex: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}avatar_color_index'],
+      )!,
+      deviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}device_id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $UsersTable createAlias(String alias) {
+    return $UsersTable(attachedDatabase, alias);
+  }
+}
+
+class User extends DataClass implements Insertable<User> {
+  final String id;
+  final String username;
+  final String displayName;
+  final String? avatarRef;
+  final int avatarColorIndex;
+  final String deviceId;
+  final DateTime createdAt;
+  const User({
+    required this.id,
+    required this.username,
+    required this.displayName,
+    this.avatarRef,
+    required this.avatarColorIndex,
+    required this.deviceId,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['username'] = Variable<String>(username);
+    map['display_name'] = Variable<String>(displayName);
+    if (!nullToAbsent || avatarRef != null) {
+      map['avatar_ref'] = Variable<String>(avatarRef);
+    }
+    map['avatar_color_index'] = Variable<int>(avatarColorIndex);
+    map['device_id'] = Variable<String>(deviceId);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  UsersCompanion toCompanion(bool nullToAbsent) {
+    return UsersCompanion(
+      id: Value(id),
+      username: Value(username),
+      displayName: Value(displayName),
+      avatarRef: avatarRef == null && nullToAbsent
+          ? const Value.absent()
+          : Value(avatarRef),
+      avatarColorIndex: Value(avatarColorIndex),
+      deviceId: Value(deviceId),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory User.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return User(
+      id: serializer.fromJson<String>(json['id']),
+      username: serializer.fromJson<String>(json['username']),
+      displayName: serializer.fromJson<String>(json['displayName']),
+      avatarRef: serializer.fromJson<String?>(json['avatarRef']),
+      avatarColorIndex: serializer.fromJson<int>(json['avatarColorIndex']),
+      deviceId: serializer.fromJson<String>(json['deviceId']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'username': serializer.toJson<String>(username),
+      'displayName': serializer.toJson<String>(displayName),
+      'avatarRef': serializer.toJson<String?>(avatarRef),
+      'avatarColorIndex': serializer.toJson<int>(avatarColorIndex),
+      'deviceId': serializer.toJson<String>(deviceId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  User copyWith({
+    String? id,
+    String? username,
+    String? displayName,
+    Value<String?> avatarRef = const Value.absent(),
+    int? avatarColorIndex,
+    String? deviceId,
+    DateTime? createdAt,
+  }) => User(
+    id: id ?? this.id,
+    username: username ?? this.username,
+    displayName: displayName ?? this.displayName,
+    avatarRef: avatarRef.present ? avatarRef.value : this.avatarRef,
+    avatarColorIndex: avatarColorIndex ?? this.avatarColorIndex,
+    deviceId: deviceId ?? this.deviceId,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  User copyWithCompanion(UsersCompanion data) {
+    return User(
+      id: data.id.present ? data.id.value : this.id,
+      username: data.username.present ? data.username.value : this.username,
+      displayName: data.displayName.present
+          ? data.displayName.value
+          : this.displayName,
+      avatarRef: data.avatarRef.present ? data.avatarRef.value : this.avatarRef,
+      avatarColorIndex: data.avatarColorIndex.present
+          ? data.avatarColorIndex.value
+          : this.avatarColorIndex,
+      deviceId: data.deviceId.present ? data.deviceId.value : this.deviceId,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('User(')
+          ..write('id: $id, ')
+          ..write('username: $username, ')
+          ..write('displayName: $displayName, ')
+          ..write('avatarRef: $avatarRef, ')
+          ..write('avatarColorIndex: $avatarColorIndex, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    username,
+    displayName,
+    avatarRef,
+    avatarColorIndex,
+    deviceId,
+    createdAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is User &&
+          other.id == this.id &&
+          other.username == this.username &&
+          other.displayName == this.displayName &&
+          other.avatarRef == this.avatarRef &&
+          other.avatarColorIndex == this.avatarColorIndex &&
+          other.deviceId == this.deviceId &&
+          other.createdAt == this.createdAt);
+}
+
+class UsersCompanion extends UpdateCompanion<User> {
+  final Value<String> id;
+  final Value<String> username;
+  final Value<String> displayName;
+  final Value<String?> avatarRef;
+  final Value<int> avatarColorIndex;
+  final Value<String> deviceId;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const UsersCompanion({
+    this.id = const Value.absent(),
+    this.username = const Value.absent(),
+    this.displayName = const Value.absent(),
+    this.avatarRef = const Value.absent(),
+    this.avatarColorIndex = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  UsersCompanion.insert({
+    required String id,
+    required String username,
+    required String displayName,
+    this.avatarRef = const Value.absent(),
+    this.avatarColorIndex = const Value.absent(),
+    required String deviceId,
+    required DateTime createdAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       username = Value(username),
+       displayName = Value(displayName),
+       deviceId = Value(deviceId),
+       createdAt = Value(createdAt);
+  static Insertable<User> custom({
+    Expression<String>? id,
+    Expression<String>? username,
+    Expression<String>? displayName,
+    Expression<String>? avatarRef,
+    Expression<int>? avatarColorIndex,
+    Expression<String>? deviceId,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (username != null) 'username': username,
+      if (displayName != null) 'display_name': displayName,
+      if (avatarRef != null) 'avatar_ref': avatarRef,
+      if (avatarColorIndex != null) 'avatar_color_index': avatarColorIndex,
+      if (deviceId != null) 'device_id': deviceId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  UsersCompanion copyWith({
+    Value<String>? id,
+    Value<String>? username,
+    Value<String>? displayName,
+    Value<String?>? avatarRef,
+    Value<int>? avatarColorIndex,
+    Value<String>? deviceId,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return UsersCompanion(
+      id: id ?? this.id,
+      username: username ?? this.username,
+      displayName: displayName ?? this.displayName,
+      avatarRef: avatarRef ?? this.avatarRef,
+      avatarColorIndex: avatarColorIndex ?? this.avatarColorIndex,
+      deviceId: deviceId ?? this.deviceId,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (username.present) {
+      map['username'] = Variable<String>(username.value);
+    }
+    if (displayName.present) {
+      map['display_name'] = Variable<String>(displayName.value);
+    }
+    if (avatarRef.present) {
+      map['avatar_ref'] = Variable<String>(avatarRef.value);
+    }
+    if (avatarColorIndex.present) {
+      map['avatar_color_index'] = Variable<int>(avatarColorIndex.value);
+    }
+    if (deviceId.present) {
+      map['device_id'] = Variable<String>(deviceId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('UsersCompanion(')
+          ..write('id: $id, ')
+          ..write('username: $username, ')
+          ..write('displayName: $displayName, ')
+          ..write('avatarRef: $avatarRef, ')
+          ..write('avatarColorIndex: $avatarColorIndex, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $GroupsTable extends Groups with TableInfo<$GroupsTable, Group> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $GroupsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _currencyMeta = const VerificationMeta(
+    'currency',
+  );
+  @override
+  late final GeneratedColumn<String> currency = GeneratedColumn<String>(
+    'currency',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('INR'),
+  );
+  static const VerificationMeta _memberIdsMeta = const VerificationMeta(
+    'memberIds',
+  );
+  @override
+  late final GeneratedColumn<String> memberIds = GeneratedColumn<String>(
+    'member_ids',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdByMeta = const VerificationMeta(
+    'createdBy',
+  );
+  @override
+  late final GeneratedColumn<String> createdBy = GeneratedColumn<String>(
+    'created_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    description,
+    currency,
+    memberIds,
+    createdBy,
+    createdAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'groups';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<Group> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('currency')) {
+      context.handle(
+        _currencyMeta,
+        currency.isAcceptableOrUnknown(data['currency']!, _currencyMeta),
+      );
+    }
+    if (data.containsKey('member_ids')) {
+      context.handle(
+        _memberIdsMeta,
+        memberIds.isAcceptableOrUnknown(data['member_ids']!, _memberIdsMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_memberIdsMeta);
+    }
+    if (data.containsKey('created_by')) {
+      context.handle(
+        _createdByMeta,
+        createdBy.isAcceptableOrUnknown(data['created_by']!, _createdByMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdByMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Group map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Group(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      ),
+      currency: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}currency'],
+      )!,
+      memberIds: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}member_ids'],
+      )!,
+      createdBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_by'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $GroupsTable createAlias(String alias) {
+    return $GroupsTable(attachedDatabase, alias);
+  }
+}
+
+class Group extends DataClass implements Insertable<Group> {
+  final String id;
+  final String name;
+  final String? description;
+  final String currency;
+
+  /// Stored as JSON array of user IDs
+  final String memberIds;
+  final String createdBy;
+  final DateTime createdAt;
+  const Group({
+    required this.id,
+    required this.name,
+    this.description,
+    required this.currency,
+    required this.memberIds,
+    required this.createdBy,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
+    map['currency'] = Variable<String>(currency);
+    map['member_ids'] = Variable<String>(memberIds);
+    map['created_by'] = Variable<String>(createdBy);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  GroupsCompanion toCompanion(bool nullToAbsent) {
+    return GroupsCompanion(
+      id: Value(id),
+      name: Value(name),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
+      currency: Value(currency),
+      memberIds: Value(memberIds),
+      createdBy: Value(createdBy),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory Group.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Group(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      description: serializer.fromJson<String?>(json['description']),
+      currency: serializer.fromJson<String>(json['currency']),
+      memberIds: serializer.fromJson<String>(json['memberIds']),
+      createdBy: serializer.fromJson<String>(json['createdBy']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+      'description': serializer.toJson<String?>(description),
+      'currency': serializer.toJson<String>(currency),
+      'memberIds': serializer.toJson<String>(memberIds),
+      'createdBy': serializer.toJson<String>(createdBy),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  Group copyWith({
+    String? id,
+    String? name,
+    Value<String?> description = const Value.absent(),
+    String? currency,
+    String? memberIds,
+    String? createdBy,
+    DateTime? createdAt,
+  }) => Group(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    description: description.present ? description.value : this.description,
+    currency: currency ?? this.currency,
+    memberIds: memberIds ?? this.memberIds,
+    createdBy: createdBy ?? this.createdBy,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  Group copyWithCompanion(GroupsCompanion data) {
+    return Group(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      currency: data.currency.present ? data.currency.value : this.currency,
+      memberIds: data.memberIds.present ? data.memberIds.value : this.memberIds,
+      createdBy: data.createdBy.present ? data.createdBy.value : this.createdBy,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Group(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('currency: $currency, ')
+          ..write('memberIds: $memberIds, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    name,
+    description,
+    currency,
+    memberIds,
+    createdBy,
+    createdAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Group &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.description == this.description &&
+          other.currency == this.currency &&
+          other.memberIds == this.memberIds &&
+          other.createdBy == this.createdBy &&
+          other.createdAt == this.createdAt);
+}
+
+class GroupsCompanion extends UpdateCompanion<Group> {
+  final Value<String> id;
+  final Value<String> name;
+  final Value<String?> description;
+  final Value<String> currency;
+  final Value<String> memberIds;
+  final Value<String> createdBy;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const GroupsCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.description = const Value.absent(),
+    this.currency = const Value.absent(),
+    this.memberIds = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  GroupsCompanion.insert({
+    required String id,
+    required String name,
+    this.description = const Value.absent(),
+    this.currency = const Value.absent(),
+    required String memberIds,
+    required String createdBy,
+    required DateTime createdAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       name = Value(name),
+       memberIds = Value(memberIds),
+       createdBy = Value(createdBy),
+       createdAt = Value(createdAt);
+  static Insertable<Group> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<String>? description,
+    Expression<String>? currency,
+    Expression<String>? memberIds,
+    Expression<String>? createdBy,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (description != null) 'description': description,
+      if (currency != null) 'currency': currency,
+      if (memberIds != null) 'member_ids': memberIds,
+      if (createdBy != null) 'created_by': createdBy,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  GroupsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? name,
+    Value<String?>? description,
+    Value<String>? currency,
+    Value<String>? memberIds,
+    Value<String>? createdBy,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return GroupsCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      currency: currency ?? this.currency,
+      memberIds: memberIds ?? this.memberIds,
+      createdBy: createdBy ?? this.createdBy,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (currency.present) {
+      map['currency'] = Variable<String>(currency.value);
+    }
+    if (memberIds.present) {
+      map['member_ids'] = Variable<String>(memberIds.value);
+    }
+    if (createdBy.present) {
+      map['created_by'] = Variable<String>(createdBy.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GroupsCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('currency: $currency, ')
+          ..write('memberIds: $memberIds, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ExpensesTable extends Expenses with TableInfo<$ExpensesTable, Expense> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ExpensesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _groupIdMeta = const VerificationMeta(
+    'groupId',
+  );
+  @override
+  late final GeneratedColumn<String> groupId = GeneratedColumn<String>(
+    'group_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _payerIdMeta = const VerificationMeta(
+    'payerId',
+  );
+  @override
+  late final GeneratedColumn<String> payerId = GeneratedColumn<String>(
+    'payer_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdByMeta = const VerificationMeta(
+    'createdBy',
+  );
+  @override
+  late final GeneratedColumn<String> createdBy = GeneratedColumn<String>(
+    'created_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _totalAmountMeta = const VerificationMeta(
+    'totalAmount',
+  );
+  @override
+  late final GeneratedColumn<double> totalAmount = GeneratedColumn<double>(
+    'total_amount',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _currencyMeta = const VerificationMeta(
+    'currency',
+  );
+  @override
+  late final GeneratedColumn<String> currency = GeneratedColumn<String>(
+    'currency',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('INR'),
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _categoryMeta = const VerificationMeta(
+    'category',
+  );
+  @override
+  late final GeneratedColumn<String> category = GeneratedColumn<String>(
+    'category',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('other'),
+  );
+  static const VerificationMeta _splitModeMeta = const VerificationMeta(
+    'splitMode',
+  );
+  @override
+  late final GeneratedColumn<String> splitMode = GeneratedColumn<String>(
+    'split_mode',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('equal'),
+  );
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
+    'date',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _vectorClockMeta = const VerificationMeta(
+    'vectorClock',
+  );
+  @override
+  late final GeneratedColumn<String> vectorClock = GeneratedColumn<String>(
+    'vector_clock',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('{}'),
+  );
+  static const VerificationMeta _lastModifiedByMeta = const VerificationMeta(
+    'lastModifiedBy',
+  );
+  @override
+  late final GeneratedColumn<String> lastModifiedBy = GeneratedColumn<String>(
+    'last_modified_by',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _hasConflictMeta = const VerificationMeta(
+    'hasConflict',
+  );
+  @override
+  late final GeneratedColumn<bool> hasConflict = GeneratedColumn<bool>(
+    'has_conflict',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("has_conflict" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _conflictDetailsMeta = const VerificationMeta(
+    'conflictDetails',
+  );
+  @override
+  late final GeneratedColumn<String> conflictDetails = GeneratedColumn<String>(
+    'conflict_details',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    groupId,
+    payerId,
+    createdBy,
+    totalAmount,
+    currency,
+    description,
+    category,
+    splitMode,
+    date,
+    vectorClock,
+    lastModifiedBy,
+    isDeleted,
+    hasConflict,
+    conflictDetails,
+    createdAt,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'expenses';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<Expense> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('group_id')) {
+      context.handle(
+        _groupIdMeta,
+        groupId.isAcceptableOrUnknown(data['group_id']!, _groupIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_groupIdMeta);
+    }
+    if (data.containsKey('payer_id')) {
+      context.handle(
+        _payerIdMeta,
+        payerId.isAcceptableOrUnknown(data['payer_id']!, _payerIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_payerIdMeta);
+    }
+    if (data.containsKey('created_by')) {
+      context.handle(
+        _createdByMeta,
+        createdBy.isAcceptableOrUnknown(data['created_by']!, _createdByMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdByMeta);
+    }
+    if (data.containsKey('total_amount')) {
+      context.handle(
+        _totalAmountMeta,
+        totalAmount.isAcceptableOrUnknown(
+          data['total_amount']!,
+          _totalAmountMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_totalAmountMeta);
+    }
+    if (data.containsKey('currency')) {
+      context.handle(
+        _currencyMeta,
+        currency.isAcceptableOrUnknown(data['currency']!, _currencyMeta),
+      );
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_descriptionMeta);
+    }
+    if (data.containsKey('category')) {
+      context.handle(
+        _categoryMeta,
+        category.isAcceptableOrUnknown(data['category']!, _categoryMeta),
+      );
+    }
+    if (data.containsKey('split_mode')) {
+      context.handle(
+        _splitModeMeta,
+        splitMode.isAcceptableOrUnknown(data['split_mode']!, _splitModeMeta),
+      );
+    }
+    if (data.containsKey('date')) {
+      context.handle(
+        _dateMeta,
+        date.isAcceptableOrUnknown(data['date']!, _dateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateMeta);
+    }
+    if (data.containsKey('vector_clock')) {
+      context.handle(
+        _vectorClockMeta,
+        vectorClock.isAcceptableOrUnknown(
+          data['vector_clock']!,
+          _vectorClockMeta,
+        ),
+      );
+    }
+    if (data.containsKey('last_modified_by')) {
+      context.handle(
+        _lastModifiedByMeta,
+        lastModifiedBy.isAcceptableOrUnknown(
+          data['last_modified_by']!,
+          _lastModifiedByMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_lastModifiedByMeta);
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
+    if (data.containsKey('has_conflict')) {
+      context.handle(
+        _hasConflictMeta,
+        hasConflict.isAcceptableOrUnknown(
+          data['has_conflict']!,
+          _hasConflictMeta,
+        ),
+      );
+    }
+    if (data.containsKey('conflict_details')) {
+      context.handle(
+        _conflictDetailsMeta,
+        conflictDetails.isAcceptableOrUnknown(
+          data['conflict_details']!,
+          _conflictDetailsMeta,
+        ),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Expense map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Expense(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      groupId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}group_id'],
+      )!,
+      payerId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}payer_id'],
+      )!,
+      createdBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_by'],
+      )!,
+      totalAmount: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}total_amount'],
+      )!,
+      currency: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}currency'],
+      )!,
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      )!,
+      category: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}category'],
+      )!,
+      splitMode: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}split_mode'],
+      )!,
+      date: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date'],
+      )!,
+      vectorClock: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}vector_clock'],
+      )!,
+      lastModifiedBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}last_modified_by'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
+      hasConflict: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}has_conflict'],
+      )!,
+      conflictDetails: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}conflict_details'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $ExpensesTable createAlias(String alias) {
+    return $ExpensesTable(attachedDatabase, alias);
+  }
+}
+
+class Expense extends DataClass implements Insertable<Expense> {
+  final String id;
+  final String groupId;
+  final String payerId;
+  final String createdBy;
+  final double totalAmount;
+  final String currency;
+  final String description;
+  final String category;
+  final String splitMode;
+  final DateTime date;
+
+  /// Vector clock stored as JSON: {"A": 2, "B": 1}
+  final String vectorClock;
+  final String lastModifiedBy;
+  final bool isDeleted;
+  final bool hasConflict;
+  final String? conflictDetails;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  const Expense({
+    required this.id,
+    required this.groupId,
+    required this.payerId,
+    required this.createdBy,
+    required this.totalAmount,
+    required this.currency,
+    required this.description,
+    required this.category,
+    required this.splitMode,
+    required this.date,
+    required this.vectorClock,
+    required this.lastModifiedBy,
+    required this.isDeleted,
+    required this.hasConflict,
+    this.conflictDetails,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['group_id'] = Variable<String>(groupId);
+    map['payer_id'] = Variable<String>(payerId);
+    map['created_by'] = Variable<String>(createdBy);
+    map['total_amount'] = Variable<double>(totalAmount);
+    map['currency'] = Variable<String>(currency);
+    map['description'] = Variable<String>(description);
+    map['category'] = Variable<String>(category);
+    map['split_mode'] = Variable<String>(splitMode);
+    map['date'] = Variable<DateTime>(date);
+    map['vector_clock'] = Variable<String>(vectorClock);
+    map['last_modified_by'] = Variable<String>(lastModifiedBy);
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    map['has_conflict'] = Variable<bool>(hasConflict);
+    if (!nullToAbsent || conflictDetails != null) {
+      map['conflict_details'] = Variable<String>(conflictDetails);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  ExpensesCompanion toCompanion(bool nullToAbsent) {
+    return ExpensesCompanion(
+      id: Value(id),
+      groupId: Value(groupId),
+      payerId: Value(payerId),
+      createdBy: Value(createdBy),
+      totalAmount: Value(totalAmount),
+      currency: Value(currency),
+      description: Value(description),
+      category: Value(category),
+      splitMode: Value(splitMode),
+      date: Value(date),
+      vectorClock: Value(vectorClock),
+      lastModifiedBy: Value(lastModifiedBy),
+      isDeleted: Value(isDeleted),
+      hasConflict: Value(hasConflict),
+      conflictDetails: conflictDetails == null && nullToAbsent
+          ? const Value.absent()
+          : Value(conflictDetails),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory Expense.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Expense(
+      id: serializer.fromJson<String>(json['id']),
+      groupId: serializer.fromJson<String>(json['groupId']),
+      payerId: serializer.fromJson<String>(json['payerId']),
+      createdBy: serializer.fromJson<String>(json['createdBy']),
+      totalAmount: serializer.fromJson<double>(json['totalAmount']),
+      currency: serializer.fromJson<String>(json['currency']),
+      description: serializer.fromJson<String>(json['description']),
+      category: serializer.fromJson<String>(json['category']),
+      splitMode: serializer.fromJson<String>(json['splitMode']),
+      date: serializer.fromJson<DateTime>(json['date']),
+      vectorClock: serializer.fromJson<String>(json['vectorClock']),
+      lastModifiedBy: serializer.fromJson<String>(json['lastModifiedBy']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+      hasConflict: serializer.fromJson<bool>(json['hasConflict']),
+      conflictDetails: serializer.fromJson<String?>(json['conflictDetails']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'groupId': serializer.toJson<String>(groupId),
+      'payerId': serializer.toJson<String>(payerId),
+      'createdBy': serializer.toJson<String>(createdBy),
+      'totalAmount': serializer.toJson<double>(totalAmount),
+      'currency': serializer.toJson<String>(currency),
+      'description': serializer.toJson<String>(description),
+      'category': serializer.toJson<String>(category),
+      'splitMode': serializer.toJson<String>(splitMode),
+      'date': serializer.toJson<DateTime>(date),
+      'vectorClock': serializer.toJson<String>(vectorClock),
+      'lastModifiedBy': serializer.toJson<String>(lastModifiedBy),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+      'hasConflict': serializer.toJson<bool>(hasConflict),
+      'conflictDetails': serializer.toJson<String?>(conflictDetails),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  Expense copyWith({
+    String? id,
+    String? groupId,
+    String? payerId,
+    String? createdBy,
+    double? totalAmount,
+    String? currency,
+    String? description,
+    String? category,
+    String? splitMode,
+    DateTime? date,
+    String? vectorClock,
+    String? lastModifiedBy,
+    bool? isDeleted,
+    bool? hasConflict,
+    Value<String?> conflictDetails = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) => Expense(
+    id: id ?? this.id,
+    groupId: groupId ?? this.groupId,
+    payerId: payerId ?? this.payerId,
+    createdBy: createdBy ?? this.createdBy,
+    totalAmount: totalAmount ?? this.totalAmount,
+    currency: currency ?? this.currency,
+    description: description ?? this.description,
+    category: category ?? this.category,
+    splitMode: splitMode ?? this.splitMode,
+    date: date ?? this.date,
+    vectorClock: vectorClock ?? this.vectorClock,
+    lastModifiedBy: lastModifiedBy ?? this.lastModifiedBy,
+    isDeleted: isDeleted ?? this.isDeleted,
+    hasConflict: hasConflict ?? this.hasConflict,
+    conflictDetails: conflictDetails.present
+        ? conflictDetails.value
+        : this.conflictDetails,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  Expense copyWithCompanion(ExpensesCompanion data) {
+    return Expense(
+      id: data.id.present ? data.id.value : this.id,
+      groupId: data.groupId.present ? data.groupId.value : this.groupId,
+      payerId: data.payerId.present ? data.payerId.value : this.payerId,
+      createdBy: data.createdBy.present ? data.createdBy.value : this.createdBy,
+      totalAmount: data.totalAmount.present
+          ? data.totalAmount.value
+          : this.totalAmount,
+      currency: data.currency.present ? data.currency.value : this.currency,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      category: data.category.present ? data.category.value : this.category,
+      splitMode: data.splitMode.present ? data.splitMode.value : this.splitMode,
+      date: data.date.present ? data.date.value : this.date,
+      vectorClock: data.vectorClock.present
+          ? data.vectorClock.value
+          : this.vectorClock,
+      lastModifiedBy: data.lastModifiedBy.present
+          ? data.lastModifiedBy.value
+          : this.lastModifiedBy,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+      hasConflict: data.hasConflict.present
+          ? data.hasConflict.value
+          : this.hasConflict,
+      conflictDetails: data.conflictDetails.present
+          ? data.conflictDetails.value
+          : this.conflictDetails,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Expense(')
+          ..write('id: $id, ')
+          ..write('groupId: $groupId, ')
+          ..write('payerId: $payerId, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('totalAmount: $totalAmount, ')
+          ..write('currency: $currency, ')
+          ..write('description: $description, ')
+          ..write('category: $category, ')
+          ..write('splitMode: $splitMode, ')
+          ..write('date: $date, ')
+          ..write('vectorClock: $vectorClock, ')
+          ..write('lastModifiedBy: $lastModifiedBy, ')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('hasConflict: $hasConflict, ')
+          ..write('conflictDetails: $conflictDetails, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    groupId,
+    payerId,
+    createdBy,
+    totalAmount,
+    currency,
+    description,
+    category,
+    splitMode,
+    date,
+    vectorClock,
+    lastModifiedBy,
+    isDeleted,
+    hasConflict,
+    conflictDetails,
+    createdAt,
+    updatedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Expense &&
+          other.id == this.id &&
+          other.groupId == this.groupId &&
+          other.payerId == this.payerId &&
+          other.createdBy == this.createdBy &&
+          other.totalAmount == this.totalAmount &&
+          other.currency == this.currency &&
+          other.description == this.description &&
+          other.category == this.category &&
+          other.splitMode == this.splitMode &&
+          other.date == this.date &&
+          other.vectorClock == this.vectorClock &&
+          other.lastModifiedBy == this.lastModifiedBy &&
+          other.isDeleted == this.isDeleted &&
+          other.hasConflict == this.hasConflict &&
+          other.conflictDetails == this.conflictDetails &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class ExpensesCompanion extends UpdateCompanion<Expense> {
+  final Value<String> id;
+  final Value<String> groupId;
+  final Value<String> payerId;
+  final Value<String> createdBy;
+  final Value<double> totalAmount;
+  final Value<String> currency;
+  final Value<String> description;
+  final Value<String> category;
+  final Value<String> splitMode;
+  final Value<DateTime> date;
+  final Value<String> vectorClock;
+  final Value<String> lastModifiedBy;
+  final Value<bool> isDeleted;
+  final Value<bool> hasConflict;
+  final Value<String?> conflictDetails;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const ExpensesCompanion({
+    this.id = const Value.absent(),
+    this.groupId = const Value.absent(),
+    this.payerId = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.totalAmount = const Value.absent(),
+    this.currency = const Value.absent(),
+    this.description = const Value.absent(),
+    this.category = const Value.absent(),
+    this.splitMode = const Value.absent(),
+    this.date = const Value.absent(),
+    this.vectorClock = const Value.absent(),
+    this.lastModifiedBy = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.hasConflict = const Value.absent(),
+    this.conflictDetails = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ExpensesCompanion.insert({
+    required String id,
+    required String groupId,
+    required String payerId,
+    required String createdBy,
+    required double totalAmount,
+    this.currency = const Value.absent(),
+    required String description,
+    this.category = const Value.absent(),
+    this.splitMode = const Value.absent(),
+    required DateTime date,
+    this.vectorClock = const Value.absent(),
+    required String lastModifiedBy,
+    this.isDeleted = const Value.absent(),
+    this.hasConflict = const Value.absent(),
+    this.conflictDetails = const Value.absent(),
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       groupId = Value(groupId),
+       payerId = Value(payerId),
+       createdBy = Value(createdBy),
+       totalAmount = Value(totalAmount),
+       description = Value(description),
+       date = Value(date),
+       lastModifiedBy = Value(lastModifiedBy),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<Expense> custom({
+    Expression<String>? id,
+    Expression<String>? groupId,
+    Expression<String>? payerId,
+    Expression<String>? createdBy,
+    Expression<double>? totalAmount,
+    Expression<String>? currency,
+    Expression<String>? description,
+    Expression<String>? category,
+    Expression<String>? splitMode,
+    Expression<DateTime>? date,
+    Expression<String>? vectorClock,
+    Expression<String>? lastModifiedBy,
+    Expression<bool>? isDeleted,
+    Expression<bool>? hasConflict,
+    Expression<String>? conflictDetails,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (groupId != null) 'group_id': groupId,
+      if (payerId != null) 'payer_id': payerId,
+      if (createdBy != null) 'created_by': createdBy,
+      if (totalAmount != null) 'total_amount': totalAmount,
+      if (currency != null) 'currency': currency,
+      if (description != null) 'description': description,
+      if (category != null) 'category': category,
+      if (splitMode != null) 'split_mode': splitMode,
+      if (date != null) 'date': date,
+      if (vectorClock != null) 'vector_clock': vectorClock,
+      if (lastModifiedBy != null) 'last_modified_by': lastModifiedBy,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+      if (hasConflict != null) 'has_conflict': hasConflict,
+      if (conflictDetails != null) 'conflict_details': conflictDetails,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ExpensesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? groupId,
+    Value<String>? payerId,
+    Value<String>? createdBy,
+    Value<double>? totalAmount,
+    Value<String>? currency,
+    Value<String>? description,
+    Value<String>? category,
+    Value<String>? splitMode,
+    Value<DateTime>? date,
+    Value<String>? vectorClock,
+    Value<String>? lastModifiedBy,
+    Value<bool>? isDeleted,
+    Value<bool>? hasConflict,
+    Value<String?>? conflictDetails,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return ExpensesCompanion(
+      id: id ?? this.id,
+      groupId: groupId ?? this.groupId,
+      payerId: payerId ?? this.payerId,
+      createdBy: createdBy ?? this.createdBy,
+      totalAmount: totalAmount ?? this.totalAmount,
+      currency: currency ?? this.currency,
+      description: description ?? this.description,
+      category: category ?? this.category,
+      splitMode: splitMode ?? this.splitMode,
+      date: date ?? this.date,
+      vectorClock: vectorClock ?? this.vectorClock,
+      lastModifiedBy: lastModifiedBy ?? this.lastModifiedBy,
+      isDeleted: isDeleted ?? this.isDeleted,
+      hasConflict: hasConflict ?? this.hasConflict,
+      conflictDetails: conflictDetails ?? this.conflictDetails,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (groupId.present) {
+      map['group_id'] = Variable<String>(groupId.value);
+    }
+    if (payerId.present) {
+      map['payer_id'] = Variable<String>(payerId.value);
+    }
+    if (createdBy.present) {
+      map['created_by'] = Variable<String>(createdBy.value);
+    }
+    if (totalAmount.present) {
+      map['total_amount'] = Variable<double>(totalAmount.value);
+    }
+    if (currency.present) {
+      map['currency'] = Variable<String>(currency.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<String>(category.value);
+    }
+    if (splitMode.present) {
+      map['split_mode'] = Variable<String>(splitMode.value);
+    }
+    if (date.present) {
+      map['date'] = Variable<DateTime>(date.value);
+    }
+    if (vectorClock.present) {
+      map['vector_clock'] = Variable<String>(vectorClock.value);
+    }
+    if (lastModifiedBy.present) {
+      map['last_modified_by'] = Variable<String>(lastModifiedBy.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    if (hasConflict.present) {
+      map['has_conflict'] = Variable<bool>(hasConflict.value);
+    }
+    if (conflictDetails.present) {
+      map['conflict_details'] = Variable<String>(conflictDetails.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExpensesCompanion(')
+          ..write('id: $id, ')
+          ..write('groupId: $groupId, ')
+          ..write('payerId: $payerId, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('totalAmount: $totalAmount, ')
+          ..write('currency: $currency, ')
+          ..write('description: $description, ')
+          ..write('category: $category, ')
+          ..write('splitMode: $splitMode, ')
+          ..write('date: $date, ')
+          ..write('vectorClock: $vectorClock, ')
+          ..write('lastModifiedBy: $lastModifiedBy, ')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('hasConflict: $hasConflict, ')
+          ..write('conflictDetails: $conflictDetails, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $SplitsTable extends Splits with TableInfo<$SplitsTable, Split> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SplitsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _transactionIdMeta = const VerificationMeta(
+    'transactionId',
+  );
+  @override
+  late final GeneratedColumn<String> transactionId = GeneratedColumn<String>(
+    'transaction_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _debtorIdMeta = const VerificationMeta(
+    'debtorId',
+  );
+  @override
+  late final GeneratedColumn<String> debtorId = GeneratedColumn<String>(
+    'debtor_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _owedShareMeta = const VerificationMeta(
+    'owedShare',
+  );
+  @override
+  late final GeneratedColumn<double> owedShare = GeneratedColumn<double>(
+    'owed_share',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _rawInputMeta = const VerificationMeta(
+    'rawInput',
+  );
+  @override
+  late final GeneratedColumn<double> rawInput = GeneratedColumn<double>(
+    'raw_input',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _versionMeta = const VerificationMeta(
+    'version',
+  );
+  @override
+  late final GeneratedColumn<int> version = GeneratedColumn<int>(
+    'version',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(1),
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _isPaidMeta = const VerificationMeta('isPaid');
+  @override
+  late final GeneratedColumn<bool> isPaid = GeneratedColumn<bool>(
+    'is_paid',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_paid" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    transactionId,
+    debtorId,
+    owedShare,
+    rawInput,
+    version,
+    isDeleted,
+    isPaid,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'splits';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<Split> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('transaction_id')) {
+      context.handle(
+        _transactionIdMeta,
+        transactionId.isAcceptableOrUnknown(
+          data['transaction_id']!,
+          _transactionIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_transactionIdMeta);
+    }
+    if (data.containsKey('debtor_id')) {
+      context.handle(
+        _debtorIdMeta,
+        debtorId.isAcceptableOrUnknown(data['debtor_id']!, _debtorIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_debtorIdMeta);
+    }
+    if (data.containsKey('owed_share')) {
+      context.handle(
+        _owedShareMeta,
+        owedShare.isAcceptableOrUnknown(data['owed_share']!, _owedShareMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_owedShareMeta);
+    }
+    if (data.containsKey('raw_input')) {
+      context.handle(
+        _rawInputMeta,
+        rawInput.isAcceptableOrUnknown(data['raw_input']!, _rawInputMeta),
+      );
+    }
+    if (data.containsKey('version')) {
+      context.handle(
+        _versionMeta,
+        version.isAcceptableOrUnknown(data['version']!, _versionMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
+    if (data.containsKey('is_paid')) {
+      context.handle(
+        _isPaidMeta,
+        isPaid.isAcceptableOrUnknown(data['is_paid']!, _isPaidMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Split map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Split(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      transactionId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}transaction_id'],
+      )!,
+      debtorId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}debtor_id'],
+      )!,
+      owedShare: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}owed_share'],
+      )!,
+      rawInput: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}raw_input'],
+      )!,
+      version: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}version'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
+      isPaid: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_paid'],
+      )!,
+    );
+  }
+
+  @override
+  $SplitsTable createAlias(String alias) {
+    return $SplitsTable(attachedDatabase, alias);
+  }
+}
+
+class Split extends DataClass implements Insertable<Split> {
+  final String id;
+  final String transactionId;
+  final String debtorId;
+  final double owedShare;
+  final double rawInput;
+  final int version;
+  final bool isDeleted;
+  final bool isPaid;
+  const Split({
+    required this.id,
+    required this.transactionId,
+    required this.debtorId,
+    required this.owedShare,
+    required this.rawInput,
+    required this.version,
+    required this.isDeleted,
+    required this.isPaid,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['transaction_id'] = Variable<String>(transactionId);
+    map['debtor_id'] = Variable<String>(debtorId);
+    map['owed_share'] = Variable<double>(owedShare);
+    map['raw_input'] = Variable<double>(rawInput);
+    map['version'] = Variable<int>(version);
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    map['is_paid'] = Variable<bool>(isPaid);
+    return map;
+  }
+
+  SplitsCompanion toCompanion(bool nullToAbsent) {
+    return SplitsCompanion(
+      id: Value(id),
+      transactionId: Value(transactionId),
+      debtorId: Value(debtorId),
+      owedShare: Value(owedShare),
+      rawInput: Value(rawInput),
+      version: Value(version),
+      isDeleted: Value(isDeleted),
+      isPaid: Value(isPaid),
+    );
+  }
+
+  factory Split.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Split(
+      id: serializer.fromJson<String>(json['id']),
+      transactionId: serializer.fromJson<String>(json['transactionId']),
+      debtorId: serializer.fromJson<String>(json['debtorId']),
+      owedShare: serializer.fromJson<double>(json['owedShare']),
+      rawInput: serializer.fromJson<double>(json['rawInput']),
+      version: serializer.fromJson<int>(json['version']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+      isPaid: serializer.fromJson<bool>(json['isPaid']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'transactionId': serializer.toJson<String>(transactionId),
+      'debtorId': serializer.toJson<String>(debtorId),
+      'owedShare': serializer.toJson<double>(owedShare),
+      'rawInput': serializer.toJson<double>(rawInput),
+      'version': serializer.toJson<int>(version),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+      'isPaid': serializer.toJson<bool>(isPaid),
+    };
+  }
+
+  Split copyWith({
+    String? id,
+    String? transactionId,
+    String? debtorId,
+    double? owedShare,
+    double? rawInput,
+    int? version,
+    bool? isDeleted,
+    bool? isPaid,
+  }) => Split(
+    id: id ?? this.id,
+    transactionId: transactionId ?? this.transactionId,
+    debtorId: debtorId ?? this.debtorId,
+    owedShare: owedShare ?? this.owedShare,
+    rawInput: rawInput ?? this.rawInput,
+    version: version ?? this.version,
+    isDeleted: isDeleted ?? this.isDeleted,
+    isPaid: isPaid ?? this.isPaid,
+  );
+  Split copyWithCompanion(SplitsCompanion data) {
+    return Split(
+      id: data.id.present ? data.id.value : this.id,
+      transactionId: data.transactionId.present
+          ? data.transactionId.value
+          : this.transactionId,
+      debtorId: data.debtorId.present ? data.debtorId.value : this.debtorId,
+      owedShare: data.owedShare.present ? data.owedShare.value : this.owedShare,
+      rawInput: data.rawInput.present ? data.rawInput.value : this.rawInput,
+      version: data.version.present ? data.version.value : this.version,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+      isPaid: data.isPaid.present ? data.isPaid.value : this.isPaid,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Split(')
+          ..write('id: $id, ')
+          ..write('transactionId: $transactionId, ')
+          ..write('debtorId: $debtorId, ')
+          ..write('owedShare: $owedShare, ')
+          ..write('rawInput: $rawInput, ')
+          ..write('version: $version, ')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('isPaid: $isPaid')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    transactionId,
+    debtorId,
+    owedShare,
+    rawInput,
+    version,
+    isDeleted,
+    isPaid,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Split &&
+          other.id == this.id &&
+          other.transactionId == this.transactionId &&
+          other.debtorId == this.debtorId &&
+          other.owedShare == this.owedShare &&
+          other.rawInput == this.rawInput &&
+          other.version == this.version &&
+          other.isDeleted == this.isDeleted &&
+          other.isPaid == this.isPaid);
+}
+
+class SplitsCompanion extends UpdateCompanion<Split> {
+  final Value<String> id;
+  final Value<String> transactionId;
+  final Value<String> debtorId;
+  final Value<double> owedShare;
+  final Value<double> rawInput;
+  final Value<int> version;
+  final Value<bool> isDeleted;
+  final Value<bool> isPaid;
+  final Value<int> rowid;
+  const SplitsCompanion({
+    this.id = const Value.absent(),
+    this.transactionId = const Value.absent(),
+    this.debtorId = const Value.absent(),
+    this.owedShare = const Value.absent(),
+    this.rawInput = const Value.absent(),
+    this.version = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.isPaid = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SplitsCompanion.insert({
+    required String id,
+    required String transactionId,
+    required String debtorId,
+    required double owedShare,
+    this.rawInput = const Value.absent(),
+    this.version = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.isPaid = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       transactionId = Value(transactionId),
+       debtorId = Value(debtorId),
+       owedShare = Value(owedShare);
+  static Insertable<Split> custom({
+    Expression<String>? id,
+    Expression<String>? transactionId,
+    Expression<String>? debtorId,
+    Expression<double>? owedShare,
+    Expression<double>? rawInput,
+    Expression<int>? version,
+    Expression<bool>? isDeleted,
+    Expression<bool>? isPaid,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (transactionId != null) 'transaction_id': transactionId,
+      if (debtorId != null) 'debtor_id': debtorId,
+      if (owedShare != null) 'owed_share': owedShare,
+      if (rawInput != null) 'raw_input': rawInput,
+      if (version != null) 'version': version,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+      if (isPaid != null) 'is_paid': isPaid,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SplitsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? transactionId,
+    Value<String>? debtorId,
+    Value<double>? owedShare,
+    Value<double>? rawInput,
+    Value<int>? version,
+    Value<bool>? isDeleted,
+    Value<bool>? isPaid,
+    Value<int>? rowid,
+  }) {
+    return SplitsCompanion(
+      id: id ?? this.id,
+      transactionId: transactionId ?? this.transactionId,
+      debtorId: debtorId ?? this.debtorId,
+      owedShare: owedShare ?? this.owedShare,
+      rawInput: rawInput ?? this.rawInput,
+      version: version ?? this.version,
+      isDeleted: isDeleted ?? this.isDeleted,
+      isPaid: isPaid ?? this.isPaid,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (transactionId.present) {
+      map['transaction_id'] = Variable<String>(transactionId.value);
+    }
+    if (debtorId.present) {
+      map['debtor_id'] = Variable<String>(debtorId.value);
+    }
+    if (owedShare.present) {
+      map['owed_share'] = Variable<double>(owedShare.value);
+    }
+    if (rawInput.present) {
+      map['raw_input'] = Variable<double>(rawInput.value);
+    }
+    if (version.present) {
+      map['version'] = Variable<int>(version.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    if (isPaid.present) {
+      map['is_paid'] = Variable<bool>(isPaid.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SplitsCompanion(')
+          ..write('id: $id, ')
+          ..write('transactionId: $transactionId, ')
+          ..write('debtorId: $debtorId, ')
+          ..write('owedShare: $owedShare, ')
+          ..write('rawInput: $rawInput, ')
+          ..write('version: $version, ')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('isPaid: $isPaid, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+abstract class _$ZplitDatabase extends GeneratedDatabase {
+  _$ZplitDatabase(QueryExecutor e) : super(e);
+  $ZplitDatabaseManager get managers => $ZplitDatabaseManager(this);
+  late final $UsersTable users = $UsersTable(this);
+  late final $GroupsTable groups = $GroupsTable(this);
+  late final $ExpensesTable expenses = $ExpensesTable(this);
+  late final $SplitsTable splits = $SplitsTable(this);
+  @override
+  Iterable<TableInfo<Table, Object?>> get allTables =>
+      allSchemaEntities.whereType<TableInfo<Table, Object?>>();
+  @override
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+    users,
+    groups,
+    expenses,
+    splits,
+  ];
+}
+
+typedef $$UsersTableCreateCompanionBuilder =
+    UsersCompanion Function({
+      required String id,
+      required String username,
+      required String displayName,
+      Value<String?> avatarRef,
+      Value<int> avatarColorIndex,
+      required String deviceId,
+      required DateTime createdAt,
+      Value<int> rowid,
+    });
+typedef $$UsersTableUpdateCompanionBuilder =
+    UsersCompanion Function({
+      Value<String> id,
+      Value<String> username,
+      Value<String> displayName,
+      Value<String?> avatarRef,
+      Value<int> avatarColorIndex,
+      Value<String> deviceId,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+class $$UsersTableFilterComposer
+    extends Composer<_$ZplitDatabase, $UsersTable> {
+  $$UsersTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get username => $composableBuilder(
+    column: $table.username,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get avatarRef => $composableBuilder(
+    column: $table.avatarRef,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get avatarColorIndex => $composableBuilder(
+    column: $table.avatarColorIndex,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$UsersTableOrderingComposer
+    extends Composer<_$ZplitDatabase, $UsersTable> {
+  $$UsersTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get username => $composableBuilder(
+    column: $table.username,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get avatarRef => $composableBuilder(
+    column: $table.avatarRef,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get avatarColorIndex => $composableBuilder(
+    column: $table.avatarColorIndex,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$UsersTableAnnotationComposer
+    extends Composer<_$ZplitDatabase, $UsersTable> {
+  $$UsersTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get username =>
+      $composableBuilder(column: $table.username, builder: (column) => column);
+
+  GeneratedColumn<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get avatarRef =>
+      $composableBuilder(column: $table.avatarRef, builder: (column) => column);
+
+  GeneratedColumn<int> get avatarColorIndex => $composableBuilder(
+    column: $table.avatarColorIndex,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get deviceId =>
+      $composableBuilder(column: $table.deviceId, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+}
+
+class $$UsersTableTableManager
+    extends
+        RootTableManager<
+          _$ZplitDatabase,
+          $UsersTable,
+          User,
+          $$UsersTableFilterComposer,
+          $$UsersTableOrderingComposer,
+          $$UsersTableAnnotationComposer,
+          $$UsersTableCreateCompanionBuilder,
+          $$UsersTableUpdateCompanionBuilder,
+          (User, BaseReferences<_$ZplitDatabase, $UsersTable, User>),
+          User,
+          PrefetchHooks Function()
+        > {
+  $$UsersTableTableManager(_$ZplitDatabase db, $UsersTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$UsersTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$UsersTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$UsersTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> username = const Value.absent(),
+                Value<String> displayName = const Value.absent(),
+                Value<String?> avatarRef = const Value.absent(),
+                Value<int> avatarColorIndex = const Value.absent(),
+                Value<String> deviceId = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => UsersCompanion(
+                id: id,
+                username: username,
+                displayName: displayName,
+                avatarRef: avatarRef,
+                avatarColorIndex: avatarColorIndex,
+                deviceId: deviceId,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String username,
+                required String displayName,
+                Value<String?> avatarRef = const Value.absent(),
+                Value<int> avatarColorIndex = const Value.absent(),
+                required String deviceId,
+                required DateTime createdAt,
+                Value<int> rowid = const Value.absent(),
+              }) => UsersCompanion.insert(
+                id: id,
+                username: username,
+                displayName: displayName,
+                avatarRef: avatarRef,
+                avatarColorIndex: avatarColorIndex,
+                deviceId: deviceId,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$UsersTableProcessedTableManager =
+    ProcessedTableManager<
+      _$ZplitDatabase,
+      $UsersTable,
+      User,
+      $$UsersTableFilterComposer,
+      $$UsersTableOrderingComposer,
+      $$UsersTableAnnotationComposer,
+      $$UsersTableCreateCompanionBuilder,
+      $$UsersTableUpdateCompanionBuilder,
+      (User, BaseReferences<_$ZplitDatabase, $UsersTable, User>),
+      User,
+      PrefetchHooks Function()
+    >;
+typedef $$GroupsTableCreateCompanionBuilder =
+    GroupsCompanion Function({
+      required String id,
+      required String name,
+      Value<String?> description,
+      Value<String> currency,
+      required String memberIds,
+      required String createdBy,
+      required DateTime createdAt,
+      Value<int> rowid,
+    });
+typedef $$GroupsTableUpdateCompanionBuilder =
+    GroupsCompanion Function({
+      Value<String> id,
+      Value<String> name,
+      Value<String?> description,
+      Value<String> currency,
+      Value<String> memberIds,
+      Value<String> createdBy,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+class $$GroupsTableFilterComposer
+    extends Composer<_$ZplitDatabase, $GroupsTable> {
+  $$GroupsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get currency => $composableBuilder(
+    column: $table.currency,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get memberIds => $composableBuilder(
+    column: $table.memberIds,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$GroupsTableOrderingComposer
+    extends Composer<_$ZplitDatabase, $GroupsTable> {
+  $$GroupsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get currency => $composableBuilder(
+    column: $table.currency,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get memberIds => $composableBuilder(
+    column: $table.memberIds,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$GroupsTableAnnotationComposer
+    extends Composer<_$ZplitDatabase, $GroupsTable> {
+  $$GroupsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get currency =>
+      $composableBuilder(column: $table.currency, builder: (column) => column);
+
+  GeneratedColumn<String> get memberIds =>
+      $composableBuilder(column: $table.memberIds, builder: (column) => column);
+
+  GeneratedColumn<String> get createdBy =>
+      $composableBuilder(column: $table.createdBy, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+}
+
+class $$GroupsTableTableManager
+    extends
+        RootTableManager<
+          _$ZplitDatabase,
+          $GroupsTable,
+          Group,
+          $$GroupsTableFilterComposer,
+          $$GroupsTableOrderingComposer,
+          $$GroupsTableAnnotationComposer,
+          $$GroupsTableCreateCompanionBuilder,
+          $$GroupsTableUpdateCompanionBuilder,
+          (Group, BaseReferences<_$ZplitDatabase, $GroupsTable, Group>),
+          Group,
+          PrefetchHooks Function()
+        > {
+  $$GroupsTableTableManager(_$ZplitDatabase db, $GroupsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$GroupsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$GroupsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$GroupsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String?> description = const Value.absent(),
+                Value<String> currency = const Value.absent(),
+                Value<String> memberIds = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => GroupsCompanion(
+                id: id,
+                name: name,
+                description: description,
+                currency: currency,
+                memberIds: memberIds,
+                createdBy: createdBy,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String name,
+                Value<String?> description = const Value.absent(),
+                Value<String> currency = const Value.absent(),
+                required String memberIds,
+                required String createdBy,
+                required DateTime createdAt,
+                Value<int> rowid = const Value.absent(),
+              }) => GroupsCompanion.insert(
+                id: id,
+                name: name,
+                description: description,
+                currency: currency,
+                memberIds: memberIds,
+                createdBy: createdBy,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$GroupsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$ZplitDatabase,
+      $GroupsTable,
+      Group,
+      $$GroupsTableFilterComposer,
+      $$GroupsTableOrderingComposer,
+      $$GroupsTableAnnotationComposer,
+      $$GroupsTableCreateCompanionBuilder,
+      $$GroupsTableUpdateCompanionBuilder,
+      (Group, BaseReferences<_$ZplitDatabase, $GroupsTable, Group>),
+      Group,
+      PrefetchHooks Function()
+    >;
+typedef $$ExpensesTableCreateCompanionBuilder =
+    ExpensesCompanion Function({
+      required String id,
+      required String groupId,
+      required String payerId,
+      required String createdBy,
+      required double totalAmount,
+      Value<String> currency,
+      required String description,
+      Value<String> category,
+      Value<String> splitMode,
+      required DateTime date,
+      Value<String> vectorClock,
+      required String lastModifiedBy,
+      Value<bool> isDeleted,
+      Value<bool> hasConflict,
+      Value<String?> conflictDetails,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<int> rowid,
+    });
+typedef $$ExpensesTableUpdateCompanionBuilder =
+    ExpensesCompanion Function({
+      Value<String> id,
+      Value<String> groupId,
+      Value<String> payerId,
+      Value<String> createdBy,
+      Value<double> totalAmount,
+      Value<String> currency,
+      Value<String> description,
+      Value<String> category,
+      Value<String> splitMode,
+      Value<DateTime> date,
+      Value<String> vectorClock,
+      Value<String> lastModifiedBy,
+      Value<bool> isDeleted,
+      Value<bool> hasConflict,
+      Value<String?> conflictDetails,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+
+class $$ExpensesTableFilterComposer
+    extends Composer<_$ZplitDatabase, $ExpensesTable> {
+  $$ExpensesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get groupId => $composableBuilder(
+    column: $table.groupId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get payerId => $composableBuilder(
+    column: $table.payerId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get totalAmount => $composableBuilder(
+    column: $table.totalAmount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get currency => $composableBuilder(
+    column: $table.currency,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get splitMode => $composableBuilder(
+    column: $table.splitMode,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get vectorClock => $composableBuilder(
+    column: $table.vectorClock,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get lastModifiedBy => $composableBuilder(
+    column: $table.lastModifiedBy,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get hasConflict => $composableBuilder(
+    column: $table.hasConflict,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get conflictDetails => $composableBuilder(
+    column: $table.conflictDetails,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ExpensesTableOrderingComposer
+    extends Composer<_$ZplitDatabase, $ExpensesTable> {
+  $$ExpensesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get groupId => $composableBuilder(
+    column: $table.groupId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get payerId => $composableBuilder(
+    column: $table.payerId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get totalAmount => $composableBuilder(
+    column: $table.totalAmount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get currency => $composableBuilder(
+    column: $table.currency,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get splitMode => $composableBuilder(
+    column: $table.splitMode,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get vectorClock => $composableBuilder(
+    column: $table.vectorClock,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get lastModifiedBy => $composableBuilder(
+    column: $table.lastModifiedBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get hasConflict => $composableBuilder(
+    column: $table.hasConflict,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get conflictDetails => $composableBuilder(
+    column: $table.conflictDetails,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ExpensesTableAnnotationComposer
+    extends Composer<_$ZplitDatabase, $ExpensesTable> {
+  $$ExpensesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get groupId =>
+      $composableBuilder(column: $table.groupId, builder: (column) => column);
+
+  GeneratedColumn<String> get payerId =>
+      $composableBuilder(column: $table.payerId, builder: (column) => column);
+
+  GeneratedColumn<String> get createdBy =>
+      $composableBuilder(column: $table.createdBy, builder: (column) => column);
+
+  GeneratedColumn<double> get totalAmount => $composableBuilder(
+    column: $table.totalAmount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get currency =>
+      $composableBuilder(column: $table.currency, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get category =>
+      $composableBuilder(column: $table.category, builder: (column) => column);
+
+  GeneratedColumn<String> get splitMode =>
+      $composableBuilder(column: $table.splitMode, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get date =>
+      $composableBuilder(column: $table.date, builder: (column) => column);
+
+  GeneratedColumn<String> get vectorClock => $composableBuilder(
+    column: $table.vectorClock,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get lastModifiedBy => $composableBuilder(
+    column: $table.lastModifiedBy,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
+  GeneratedColumn<bool> get hasConflict => $composableBuilder(
+    column: $table.hasConflict,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get conflictDetails => $composableBuilder(
+    column: $table.conflictDetails,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+}
+
+class $$ExpensesTableTableManager
+    extends
+        RootTableManager<
+          _$ZplitDatabase,
+          $ExpensesTable,
+          Expense,
+          $$ExpensesTableFilterComposer,
+          $$ExpensesTableOrderingComposer,
+          $$ExpensesTableAnnotationComposer,
+          $$ExpensesTableCreateCompanionBuilder,
+          $$ExpensesTableUpdateCompanionBuilder,
+          (Expense, BaseReferences<_$ZplitDatabase, $ExpensesTable, Expense>),
+          Expense,
+          PrefetchHooks Function()
+        > {
+  $$ExpensesTableTableManager(_$ZplitDatabase db, $ExpensesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ExpensesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ExpensesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ExpensesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> groupId = const Value.absent(),
+                Value<String> payerId = const Value.absent(),
+                Value<String> createdBy = const Value.absent(),
+                Value<double> totalAmount = const Value.absent(),
+                Value<String> currency = const Value.absent(),
+                Value<String> description = const Value.absent(),
+                Value<String> category = const Value.absent(),
+                Value<String> splitMode = const Value.absent(),
+                Value<DateTime> date = const Value.absent(),
+                Value<String> vectorClock = const Value.absent(),
+                Value<String> lastModifiedBy = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+                Value<bool> hasConflict = const Value.absent(),
+                Value<String?> conflictDetails = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ExpensesCompanion(
+                id: id,
+                groupId: groupId,
+                payerId: payerId,
+                createdBy: createdBy,
+                totalAmount: totalAmount,
+                currency: currency,
+                description: description,
+                category: category,
+                splitMode: splitMode,
+                date: date,
+                vectorClock: vectorClock,
+                lastModifiedBy: lastModifiedBy,
+                isDeleted: isDeleted,
+                hasConflict: hasConflict,
+                conflictDetails: conflictDetails,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String groupId,
+                required String payerId,
+                required String createdBy,
+                required double totalAmount,
+                Value<String> currency = const Value.absent(),
+                required String description,
+                Value<String> category = const Value.absent(),
+                Value<String> splitMode = const Value.absent(),
+                required DateTime date,
+                Value<String> vectorClock = const Value.absent(),
+                required String lastModifiedBy,
+                Value<bool> isDeleted = const Value.absent(),
+                Value<bool> hasConflict = const Value.absent(),
+                Value<String?> conflictDetails = const Value.absent(),
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => ExpensesCompanion.insert(
+                id: id,
+                groupId: groupId,
+                payerId: payerId,
+                createdBy: createdBy,
+                totalAmount: totalAmount,
+                currency: currency,
+                description: description,
+                category: category,
+                splitMode: splitMode,
+                date: date,
+                vectorClock: vectorClock,
+                lastModifiedBy: lastModifiedBy,
+                isDeleted: isDeleted,
+                hasConflict: hasConflict,
+                conflictDetails: conflictDetails,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ExpensesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$ZplitDatabase,
+      $ExpensesTable,
+      Expense,
+      $$ExpensesTableFilterComposer,
+      $$ExpensesTableOrderingComposer,
+      $$ExpensesTableAnnotationComposer,
+      $$ExpensesTableCreateCompanionBuilder,
+      $$ExpensesTableUpdateCompanionBuilder,
+      (Expense, BaseReferences<_$ZplitDatabase, $ExpensesTable, Expense>),
+      Expense,
+      PrefetchHooks Function()
+    >;
+typedef $$SplitsTableCreateCompanionBuilder =
+    SplitsCompanion Function({
+      required String id,
+      required String transactionId,
+      required String debtorId,
+      required double owedShare,
+      Value<double> rawInput,
+      Value<int> version,
+      Value<bool> isDeleted,
+      Value<bool> isPaid,
+      Value<int> rowid,
+    });
+typedef $$SplitsTableUpdateCompanionBuilder =
+    SplitsCompanion Function({
+      Value<String> id,
+      Value<String> transactionId,
+      Value<String> debtorId,
+      Value<double> owedShare,
+      Value<double> rawInput,
+      Value<int> version,
+      Value<bool> isDeleted,
+      Value<bool> isPaid,
+      Value<int> rowid,
+    });
+
+class $$SplitsTableFilterComposer
+    extends Composer<_$ZplitDatabase, $SplitsTable> {
+  $$SplitsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get transactionId => $composableBuilder(
+    column: $table.transactionId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get debtorId => $composableBuilder(
+    column: $table.debtorId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get owedShare => $composableBuilder(
+    column: $table.owedShare,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get rawInput => $composableBuilder(
+    column: $table.rawInput,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get version => $composableBuilder(
+    column: $table.version,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isPaid => $composableBuilder(
+    column: $table.isPaid,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$SplitsTableOrderingComposer
+    extends Composer<_$ZplitDatabase, $SplitsTable> {
+  $$SplitsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get transactionId => $composableBuilder(
+    column: $table.transactionId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get debtorId => $composableBuilder(
+    column: $table.debtorId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get owedShare => $composableBuilder(
+    column: $table.owedShare,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get rawInput => $composableBuilder(
+    column: $table.rawInput,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get version => $composableBuilder(
+    column: $table.version,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isPaid => $composableBuilder(
+    column: $table.isPaid,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$SplitsTableAnnotationComposer
+    extends Composer<_$ZplitDatabase, $SplitsTable> {
+  $$SplitsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get transactionId => $composableBuilder(
+    column: $table.transactionId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get debtorId =>
+      $composableBuilder(column: $table.debtorId, builder: (column) => column);
+
+  GeneratedColumn<double> get owedShare =>
+      $composableBuilder(column: $table.owedShare, builder: (column) => column);
+
+  GeneratedColumn<double> get rawInput =>
+      $composableBuilder(column: $table.rawInput, builder: (column) => column);
+
+  GeneratedColumn<int> get version =>
+      $composableBuilder(column: $table.version, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
+  GeneratedColumn<bool> get isPaid =>
+      $composableBuilder(column: $table.isPaid, builder: (column) => column);
+}
+
+class $$SplitsTableTableManager
+    extends
+        RootTableManager<
+          _$ZplitDatabase,
+          $SplitsTable,
+          Split,
+          $$SplitsTableFilterComposer,
+          $$SplitsTableOrderingComposer,
+          $$SplitsTableAnnotationComposer,
+          $$SplitsTableCreateCompanionBuilder,
+          $$SplitsTableUpdateCompanionBuilder,
+          (Split, BaseReferences<_$ZplitDatabase, $SplitsTable, Split>),
+          Split,
+          PrefetchHooks Function()
+        > {
+  $$SplitsTableTableManager(_$ZplitDatabase db, $SplitsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SplitsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SplitsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SplitsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> transactionId = const Value.absent(),
+                Value<String> debtorId = const Value.absent(),
+                Value<double> owedShare = const Value.absent(),
+                Value<double> rawInput = const Value.absent(),
+                Value<int> version = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+                Value<bool> isPaid = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SplitsCompanion(
+                id: id,
+                transactionId: transactionId,
+                debtorId: debtorId,
+                owedShare: owedShare,
+                rawInput: rawInput,
+                version: version,
+                isDeleted: isDeleted,
+                isPaid: isPaid,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String transactionId,
+                required String debtorId,
+                required double owedShare,
+                Value<double> rawInput = const Value.absent(),
+                Value<int> version = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+                Value<bool> isPaid = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SplitsCompanion.insert(
+                id: id,
+                transactionId: transactionId,
+                debtorId: debtorId,
+                owedShare: owedShare,
+                rawInput: rawInput,
+                version: version,
+                isDeleted: isDeleted,
+                isPaid: isPaid,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$SplitsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$ZplitDatabase,
+      $SplitsTable,
+      Split,
+      $$SplitsTableFilterComposer,
+      $$SplitsTableOrderingComposer,
+      $$SplitsTableAnnotationComposer,
+      $$SplitsTableCreateCompanionBuilder,
+      $$SplitsTableUpdateCompanionBuilder,
+      (Split, BaseReferences<_$ZplitDatabase, $SplitsTable, Split>),
+      Split,
+      PrefetchHooks Function()
+    >;
+
+class $ZplitDatabaseManager {
+  final _$ZplitDatabase _db;
+  $ZplitDatabaseManager(this._db);
+  $$UsersTableTableManager get users =>
+      $$UsersTableTableManager(_db, _db.users);
+  $$GroupsTableTableManager get groups =>
+      $$GroupsTableTableManager(_db, _db.groups);
+  $$ExpensesTableTableManager get expenses =>
+      $$ExpensesTableTableManager(_db, _db.expenses);
+  $$SplitsTableTableManager get splits =>
+      $$SplitsTableTableManager(_db, _db.splits);
+}

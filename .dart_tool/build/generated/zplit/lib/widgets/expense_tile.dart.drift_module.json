@@ -1,0 +1,9 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter/material.dart",
+    "package:zplit/models/expense_model.dart",
+    "package:zplit/theme/app_colors.dart",
+    "package:intl/intl.dart"
+  ]
+}

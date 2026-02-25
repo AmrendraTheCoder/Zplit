@@ -1,0 +1,1 @@
+{"valid_import":true,"imports":[{"uri":"package:equatable/equatable.dart","transitive":false},{"uri":"package:uuid/uuid.dart","transitive":false},{"uri":"package:zplit/theme/app_colors.dart","transitive":false},{"uri":"package:flutter/material.dart","transitive":false}],"elements":[]}

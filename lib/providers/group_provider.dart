@@ -1,23 +1,31 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/group_model.dart';
+import 'database_provider.dart';
 
-/// Provider for all groups the user belongs to.
+/// Provider for all groups.
 final groupsProvider =
     StateNotifierProvider<GroupsNotifier, List<GroupModel>>((ref) {
-  return GroupsNotifier();
+  return GroupsNotifier(ref);
 });
 
 class GroupsNotifier extends StateNotifier<List<GroupModel>> {
-  GroupsNotifier() : super([]);
+  final Ref _ref;
+  GroupsNotifier(this._ref) : super([]) {
+    _loadFromDb();
+  }
 
-  /// Creates a new group and adds it to the list.
-  void createGroup({
+  Future<void> _loadFromDb() async {
+    final dao = _ref.read(groupDaoProvider);
+    state = await dao.getAllGroups();
+  }
+
+  Future<void> createGroup({
     required String name,
     String? description,
-    String currency = '₹',
+    String currency = 'INR',
     required List<String> memberIds,
     required String createdBy,
-  }) {
+  }) async {
     final group = GroupModel.create(
       name: name,
       description: description,
@@ -26,55 +34,29 @@ class GroupsNotifier extends StateNotifier<List<GroupModel>> {
       createdBy: createdBy,
     );
     state = [...state, group];
+    await _ref.read(groupDaoProvider).upsertGroup(group);
   }
 
-  /// Adds an existing group (e.g., received via P2P invite).
-  void addGroup(GroupModel group) {
-    if (state.any((g) => g.id == group.id)) return;
-    state = [...state, group];
-  }
-
-  /// Updates a group's properties.
-  void updateGroup(GroupModel group) {
+  Future<void> addMember(String groupId, String memberId) async {
     state = [
       for (final g in state)
-        if (g.id == group.id) group else g,
+        if (g.id == groupId) g.addMember(memberId) else g,
     ];
+    final updated = state.firstWhere((g) => g.id == groupId);
+    await _ref.read(groupDaoProvider).upsertGroup(updated);
   }
 
-  /// Adds a member to a group.
-  void addMember(String groupId, String userId) {
+  Future<void> removeMember(String groupId, String memberId) async {
     state = [
       for (final g in state)
-        if (g.id == groupId && !g.memberIds.contains(userId))
-          g.copyWith(memberIds: [...g.memberIds, userId])
-        else
-          g,
+        if (g.id == groupId) g.removeMember(memberId) else g,
     ];
+    final updated = state.firstWhere((g) => g.id == groupId);
+    await _ref.read(groupDaoProvider).upsertGroup(updated);
   }
 
-  /// Removes a member from a group.
-  void removeMember(String groupId, String userId) {
-    state = [
-      for (final g in state)
-        if (g.id == groupId)
-          g.copyWith(memberIds: g.memberIds.where((id) => id != userId).toList())
-        else
-          g,
-    ];
-  }
-
-  /// Deletes a group.
-  void deleteGroup(String groupId) {
+  Future<void> deleteGroup(String groupId) async {
     state = state.where((g) => g.id != groupId).toList();
-  }
-
-  /// Gets a group by ID, or null.
-  GroupModel? getGroupById(String id) {
-    try {
-      return state.firstWhere((g) => g.id == id);
-    } catch (_) {
-      return null;
-    }
+    await _ref.read(groupDaoProvider).deleteGroup(groupId);
   }
 }

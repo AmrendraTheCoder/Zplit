@@ -1,0 +1,8 @@
+{
+  "elements": {},
+  "imports": [
+    "package:equatable/equatable.dart",
+    "package:uuid/uuid.dart",
+    "package:zplit/utils/vector_clock.dart"
+  ]
+}

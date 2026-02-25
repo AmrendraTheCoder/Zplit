@@ -1,0 +1,9 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter/material.dart",
+    "package:flutter_riverpod/flutter_riverpod.dart",
+    "package:zplit/theme/app_theme.dart",
+    "package:zplit/navigation/app_router.dart"
+  ]
+}

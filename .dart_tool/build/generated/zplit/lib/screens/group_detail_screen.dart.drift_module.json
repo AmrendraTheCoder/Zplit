@@ -1,0 +1,14 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter/material.dart",
+    "package:flutter_riverpod/flutter_riverpod.dart",
+    "package:go_router/go_router.dart",
+    "package:zplit/providers/user_provider.dart",
+    "package:zplit/providers/group_provider.dart",
+    "package:zplit/providers/expense_provider.dart",
+    "package:zplit/widgets/expense_tile.dart",
+    "package:zplit/widgets/balance_chip.dart",
+    "package:zplit/theme/app_colors.dart"
+  ]
+}

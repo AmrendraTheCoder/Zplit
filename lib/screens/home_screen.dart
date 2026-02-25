@@ -65,7 +65,7 @@ class HomeScreen extends ConsumerWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () => context.push('/settings'),
                           icon: Icon(
                             Icons.settings_outlined,
                             color: isDark
