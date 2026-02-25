@@ -1,8 +1,4 @@
-import 'dart:io';
 import 'package:drift/drift.dart';
-import 'package:drift/native.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart' as p;
 
 part 'database.g.dart';
 
@@ -39,31 +35,11 @@ class Groups extends Table {
   Set<Column> get primaryKey => {id};
 }
 
-/// Expenses/Transactions table (Image 3 schema, exact column match)
-///
-/// | Column          | Type      | Notes                              |
-/// |-----------------|-----------|------------------------------------|
-/// | id              | UUID/TEXT | Primary Key                        |
-/// | group_id        | UUID/TEXT | Links to Group                     |
-/// | payer_id        | UUID/TEXT | Who paid                           |
-/// | created_by      | UUID/TEXT | Who created the record             |
-/// | total_amount    | REAL      | The total value                    |
-/// | currency        | TEXT      | "INR", "USD"                       |
-/// | description     | TEXT      | "Dinner at Taj"                    |
-/// | category        | TEXT      | Enum string                        |
-/// | split_mode      | TEXT      | EQUAL, PERCENT, EXACT (Image 3)    |
-/// | date            | DATETIME  | When the expense occurred           |
-/// | vector_clock    | JSON/TEXT | Crucial for Sync (Image 3)          |
-/// | last_modified_by| UUID/TEXT | For LWW conflict resolution         |
-/// | is_deleted      | BOOLEAN   | Soft delete for sync                |
-/// | has_conflict    | BOOLEAN   | Sync conflict flag                  |
-/// | conflict_details| TEXT      | Human-readable conflict info        |
-/// | created_at      | DATETIME  | Record creation time                |
-/// | updated_at      | DATETIME  | Last update time                    |
+/// Expenses/Transactions table (Image 3 schema)
 class Expenses extends Table {
   TextColumn get id => text()();
-  TextColumn get groupId => text().references(Groups, #id)();
-  TextColumn get payerId => text().references(Users, #id)();
+  TextColumn get groupId => text()();
+  TextColumn get payerId => text()();
   TextColumn get createdBy => text()();
   RealColumn get totalAmount => real()();
   TextColumn get currency => text().withDefault(const Constant('INR'))();
@@ -84,12 +60,11 @@ class Expenses extends Table {
   Set<Column> get primaryKey => {id};
 }
 
-/// Splits table (Image 4: id PK, transaction_id FK, debtor_id FK,
-/// owed_share, raw_input) + Image 5 additions (version, is_deleted)
+/// Splits table (Image 4 + Image 5)
 class Splits extends Table {
   TextColumn get id => text()();
-  TextColumn get transactionId => text().references(Expenses, #id)();
-  TextColumn get debtorId => text().references(Users, #id)();
+  TextColumn get transactionId => text()();
+  TextColumn get debtorId => text()();
   RealColumn get owedShare => real()();
   RealColumn get rawInput => real().withDefault(const Constant(0))();
   IntColumn get version => integer().withDefault(const Constant(1))();
@@ -106,19 +81,8 @@ class Splits extends Table {
 
 @DriftDatabase(tables: [Users, Groups, Expenses, Splits])
 class ZplitDatabase extends _$ZplitDatabase {
-  ZplitDatabase() : super(_openConnection());
-
-  /// For testing with an in-memory database
-  ZplitDatabase.forTesting(super.e);
+  ZplitDatabase(super.e);
 
   @override
   int get schemaVersion => 1;
-}
-
-LazyDatabase _openConnection() {
-  return LazyDatabase(() async {
-    final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dbFolder.path, 'zplit.sqlite'));
-    return NativeDatabase.createInBackground(file);
-  });
 }

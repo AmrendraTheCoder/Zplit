@@ -33,7 +33,7 @@ class AppColors {
   // ── Money ──────────────────────────────────────────────
   static const Color moneyOwed = Color(0xFFFF5252);   // You owe
   static const Color moneyOwedTo = Color(0xFF00C48C);  // Others owe you
-  static const Color settled = Color(0xFF9E9E9E);
+  static const Color settled = Color(0xFF64B5F6);
 
   // ── Neutrals (Light Mode) ─────────────────────────────
   static const Color backgroundLight = Color(0xFFF8F9FC);

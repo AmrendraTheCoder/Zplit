@@ -1,10 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../db/database.dart';
+import '../db/connection.dart';
 import '../db/daos.dart';
 
 /// Global database instance provider.
+/// Uses conditional imports to pick the right backend (native/web).
 final databaseProvider = Provider<ZplitDatabase>((ref) {
-  final db = ZplitDatabase();
+  final db = constructDb();
   ref.onDispose(() => db.close());
   return db;
 });

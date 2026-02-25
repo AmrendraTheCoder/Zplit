@@ -153,7 +153,12 @@ class GroupDetailScreen extends ConsumerWidget {
                   final payer = expense.payerId == user?.id
                       ? 'You'
                       : (allUsers.where((u) => u.id == expense.payerId).firstOrNull?.displayName ?? 'Someone');
-                  return ExpenseTile(expense: expense, payerName: payer, currency: group.currency);
+                  return ExpenseTile(
+                    expense: expense,
+                    payerName: payer,
+                    currency: group.currency,
+                    onTap: () => context.push('/group/$groupId/edit-expense/${expense.id}'),
+                  );
                 },
                 childCount: expenses.length,
               ),
