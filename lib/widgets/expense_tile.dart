@@ -3,7 +3,10 @@ import '../models/expense_model.dart';
 import '../theme/app_colors.dart';
 import 'package:intl/intl.dart';
 
-/// List tile widget for displaying an expense in the group detail screen.
+/// Expense tile — Splitwise-inspired card layout.
+///
+/// Shows category emoji, description, "Added by" subtitle,
+/// date, You Owe amount, and soft-delete indicator.
 class ExpenseTile extends StatelessWidget {
   final ExpenseModel expense;
   final String payerName;
@@ -21,59 +24,101 @@ class ExpenseTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final dateStr = DateFormat('MMM d').format(expense.date);
+    final dateStr = DateFormat('MMMM d, y').format(expense.date);
+    final categoryColor = AppColors.categoryColors[expense.category.name] ??
+        AppColors.textTertiaryLight;
 
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+        padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              color: isDark ? AppColors.dividerDark : AppColors.dividerLight,
-              width: 0.5,
-            ),
+          color: isDark ? AppColors.cardDark : Colors.white,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.06)
+                : Colors.black.withValues(alpha: 0.06),
           ),
+          boxShadow: [
+            if (!isDark)
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.04),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+          ],
         ),
         child: Row(
           children: [
+            // Category icon
             Container(
-              width: 42,
-              height: 42,
+              width: 46,
+              height: 46,
               decoration: BoxDecoration(
-                color: (AppColors.categoryColors[expense.category.name] ??
-                        AppColors.textTertiaryLight)
-                    .withValues(alpha: 0.12),
+                color: categoryColor.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Center(child: Text(expense.category.emoji, style: const TextStyle(fontSize: 20))),
+              child: Center(
+                child: Text(
+                  expense.category.emoji,
+                  style: const TextStyle(fontSize: 22),
+                ),
+              ),
             ),
             const SizedBox(width: 12),
+
+            // Description + subtitle
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(children: [
-                    Expanded(child: Text(expense.description,
-                      style: Theme.of(context).textTheme.titleMedium, maxLines: 1, overflow: TextOverflow.ellipsis)),
-                    if (expense.hasConflict) ...[
-                      const SizedBox(width: 6),
-                      Icon(Icons.warning_amber_rounded, color: AppColors.warning, size: 18),
+                  Text(
+                    expense.description,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 3),
+                  Row(
+                    children: [
+                      Text(
+                        'Added by $payerName',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                      if (expense.isDeleted) ...[
+                        const SizedBox(width: 6),
+                        Icon(Icons.delete_outline,
+                            color: AppColors.textTertiaryLight, size: 14),
+                      ],
                     ],
-                    if (expense.isDeleted) ...[
-                      const SizedBox(width: 6),
-                      Icon(Icons.delete_outline, color: AppColors.textTertiaryLight, size: 18),
-                    ],
-                  ]),
-                  const SizedBox(height: 2),
-                  Text('paid by $payerName · $dateStr',
-                    style: Theme.of(context).textTheme.bodySmall),
+                  ),
                 ],
               ),
             ),
-            Text(
-              '$currency${expense.totalAmount.toStringAsFixed(expense.totalAmount == expense.totalAmount.roundToDouble() ? 0 : 2)}',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
+
+            // Amount + date column
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  dateStr,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontSize: 10,
+                      ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  '$currency ${expense.totalAmount.toStringAsFixed(expense.totalAmount == expense.totalAmount.roundToDouble() ? 0 : 2)}',
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.w800,
+                        fontSize: 18,
+                      ),
+                ),
+              ],
             ),
           ],
         ),

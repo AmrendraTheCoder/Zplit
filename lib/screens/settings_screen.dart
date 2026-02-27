@@ -4,8 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../providers/user_provider.dart';
 import '../theme/app_colors.dart';
+import '../theme/theme_provider.dart';
 
-/// Settings screen — user profile, app info, and P2P identity.
+/// Settings screen — user profile, theme, app info, and P2P identity.
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
@@ -102,6 +103,13 @@ class SettingsScreen extends ConsumerWidget {
               ],
             ),
           ),
+
+          const SizedBox(height: 28),
+
+          // ── Theme Picker ────────────────────────
+          Text('Theme', style: Theme.of(context).textTheme.headlineSmall),
+          const SizedBox(height: 12),
+          _buildThemePicker(context, ref),
 
           const SizedBox(height: 28),
 
@@ -255,6 +263,68 @@ class SettingsScreen extends ConsumerWidget {
           const SizedBox(height: 40),
         ],
       ),
+    );
+  }
+
+  Widget _buildThemePicker(BuildContext context, WidgetRef ref) {
+    final currentTheme = ref.watch(themeProvider);
+
+    return Row(
+      children: AppThemeMode.values.map((mode) {
+        final isSelected = currentTheme == mode;
+        return Expanded(
+          child: GestureDetector(
+            onTap: () => ref.read(themeProvider.notifier).setTheme(mode),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              margin: const EdgeInsets.symmetric(horizontal: 4),
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              decoration: BoxDecoration(
+                color: isSelected
+                    ? mode.accentColor.withValues(alpha: 0.15)
+                    : Theme.of(context).cardColor,
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(
+                  color: isSelected
+                      ? mode.accentColor
+                      : Theme.of(context).dividerColor,
+                  width: isSelected ? 2 : 1,
+                ),
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    width: 36,
+                    height: 36,
+                    decoration: BoxDecoration(
+                      color: mode.previewColor,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: mode.accentColor,
+                        width: 2,
+                      ),
+                    ),
+                    child: isSelected
+                        ? Icon(Icons.check_rounded,
+                            color: mode.accentColor, size: 18)
+                        : null,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    mode.label,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight:
+                          isSelected ? FontWeight.w700 : FontWeight.w500,
+                      color: isSelected ? mode.accentColor : null,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      }).toList(),
     );
   }
 

@@ -51,8 +51,7 @@ class Expenses extends Table {
   TextColumn get vectorClock => text().withDefault(const Constant('{}'))();
   TextColumn get lastModifiedBy => text()();
   BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
-  BoolColumn get hasConflict => boolean().withDefault(const Constant(false))();
-  TextColumn get conflictDetails => text().nullable()();
+
   DateTimeColumn get createdAt => dateTime()();
   DateTimeColumn get updatedAt => dateTime()();
 

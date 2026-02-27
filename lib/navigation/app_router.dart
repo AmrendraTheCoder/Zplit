@@ -7,6 +7,9 @@ import '../screens/settings_screen.dart';
 import '../screens/create_group_screen.dart';
 import '../screens/group_detail_screen.dart';
 import '../screens/add_expense_screen.dart';
+import '../screens/settle_up_picker_screen.dart';
+import '../screens/settle_up_payment_screen.dart';
+import '../screens/settle_up_success_screen.dart';
 
 /// GoRouter configuration for Zplit navigation.
 ///
@@ -16,6 +19,9 @@ import '../screens/add_expense_screen.dart';
 /// - `/create-group` — Create a new group
 /// - `/group/:id` — Group detail (members, expenses, balances)
 /// - `/group/:id/add-expense` — Add expense to a group
+/// - `/group/:id/settle-up` — Settle Up member picker
+/// - `/group/:id/settle-up/:memberId` — Payment method
+/// - `/group/:id/settle-up/:memberId/success` — Settle Up success
 final routerProvider = Provider<GoRouter>((ref) {
   final user = ref.watch(currentUserProvider);
 
@@ -66,6 +72,42 @@ final routerProvider = Provider<GoRouter>((ref) {
               final expenseId = state.pathParameters['expenseId']!;
               return AddExpenseScreen(groupId: groupId, expenseId: expenseId);
             },
+          ),
+          GoRoute(
+            path: 'settle-up',
+            name: 'settleUpPicker',
+            builder: (context, state) {
+              final groupId = state.pathParameters['id']!;
+              return SettleUpPickerScreen(groupId: groupId);
+            },
+            routes: [
+              GoRoute(
+                path: ':memberId',
+                name: 'settleUpPayment',
+                builder: (context, state) {
+                  final groupId = state.pathParameters['id']!;
+                  final memberId = state.pathParameters['memberId']!;
+                  return SettleUpPaymentScreen(
+                    groupId: groupId,
+                    memberId: memberId,
+                  );
+                },
+                routes: [
+                  GoRoute(
+                    path: 'success',
+                    name: 'settleUpSuccess',
+                    builder: (context, state) {
+                      final groupId = state.pathParameters['id']!;
+                      final memberId = state.pathParameters['memberId']!;
+                      return SettleUpSuccessScreen(
+                        groupId: groupId,
+                        memberId: memberId,
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
           ),
         ],
       ),

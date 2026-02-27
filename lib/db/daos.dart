@@ -165,8 +165,6 @@ class ExpenseDao {
             vectorClock: Value(jsonEncode(expense.vectorClock.clock)),
             lastModifiedBy: expense.lastModifiedBy,
             isDeleted: Value(expense.isDeleted),
-            hasConflict: Value(expense.hasConflict),
-            conflictDetails: Value(expense.conflictDetails),
             createdAt: expense.createdAt,
             updatedAt: expense.updatedAt,
           ),
@@ -202,8 +200,6 @@ class ExpenseDao {
       ),
       lastModifiedBy: row.lastModifiedBy,
       isDeleted: row.isDeleted,
-      hasConflict: row.hasConflict,
-      conflictDetails: row.conflictDetails,
       createdAt: row.createdAt,
       updatedAt: row.updatedAt,
     );

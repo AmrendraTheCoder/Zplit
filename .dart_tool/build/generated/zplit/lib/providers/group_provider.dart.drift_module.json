@@ -2,6 +2,7 @@
   "elements": {},
   "imports": [
     "package:flutter_riverpod/flutter_riverpod.dart",
-    "package:zplit/models/group_model.dart"
+    "package:zplit/models/group_model.dart",
+    "package:zplit/providers/database_provider.dart"
   ]
 }

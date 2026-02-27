@@ -7,7 +7,7 @@
       },
       "declaration": {
         "source_uri": "package:zplit/db/database.dart",
-        "offset": 4837,
+        "offset": 2944,
         "name": "ZplitDatabase"
       },
       "references": [
@@ -52,7 +52,7 @@
       "queries": [],
       "schema_version": 1,
       "daos": [],
-      "has_constructor_arg": false
+      "has_constructor_arg": true
     },
     "users": {
       "id": {
@@ -61,7 +61,7 @@
       },
       "declaration": {
         "source_uri": "package:zplit/db/database.dart",
-        "offset": 467,
+        "offset": 324,
         "name": "Users"
       },
       "references": [],
@@ -76,7 +76,7 @@
           "nameInDart": "id",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 506,
+            "offset": 363,
             "name": "id"
           },
           "typeConverter": null,
@@ -97,7 +97,7 @@
           "nameInDart": "username",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 539,
+            "offset": 396,
             "name": "username"
           },
           "typeConverter": null,
@@ -118,7 +118,7 @@
           "nameInDart": "displayName",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 578,
+            "offset": 435,
             "name": "displayName"
           },
           "typeConverter": null,
@@ -139,7 +139,7 @@
           "nameInDart": "avatarRef",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 620,
+            "offset": 477,
             "name": "avatarRef"
           },
           "typeConverter": null,
@@ -160,7 +160,7 @@
           "nameInDart": "avatarColorIndex",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 670,
+            "offset": 527,
             "name": "avatarColorIndex"
           },
           "typeConverter": null,
@@ -190,7 +190,7 @@
           "nameInDart": "deviceId",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 751,
+            "offset": 608,
             "name": "deviceId"
           },
           "typeConverter": null,
@@ -211,7 +211,7 @@
           "nameInDart": "createdAt",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 794,
+            "offset": 651,
             "name": "createdAt"
           },
           "typeConverter": null,
@@ -252,7 +252,7 @@
       },
       "declaration": {
         "source_uri": "package:zplit/db/database.dart",
-        "offset": 898,
+        "offset": 755,
         "name": "Groups"
       },
       "references": [],
@@ -267,7 +267,7 @@
           "nameInDart": "id",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 938,
+            "offset": 795,
             "name": "id"
           },
           "typeConverter": null,
@@ -288,7 +288,7 @@
           "nameInDart": "name",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 971,
+            "offset": 828,
             "name": "name"
           },
           "typeConverter": null,
@@ -309,7 +309,7 @@
           "nameInDart": "description",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 1006,
+            "offset": 863,
             "name": "description"
           },
           "typeConverter": null,
@@ -330,7 +330,7 @@
           "nameInDart": "currency",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 1059,
+            "offset": 916,
             "name": "currency"
           },
           "typeConverter": null,
@@ -360,7 +360,7 @@
           "nameInDart": "memberIds",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 1172,
+            "offset": 1029,
             "name": "memberIds"
           },
           "typeConverter": null,
@@ -381,7 +381,7 @@
           "nameInDart": "createdBy",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 1212,
+            "offset": 1069,
             "name": "createdBy"
           },
           "typeConverter": null,
@@ -402,7 +402,7 @@
           "nameInDart": "createdAt",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 1256,
+            "offset": 1113,
             "name": "createdAt"
           },
           "typeConverter": null,
@@ -443,7 +443,7 @@
       },
       "declaration": {
         "source_uri": "package:zplit/db/database.dart",
-        "offset": 2811,
+        "offset": 1249,
         "name": "Expenses"
       },
       "references": [],
@@ -458,7 +458,7 @@
           "nameInDart": "id",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 2853,
+            "offset": 1291,
             "name": "id"
           },
           "typeConverter": null,
@@ -479,7 +479,7 @@
           "nameInDart": "groupId",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 2886,
+            "offset": 1324,
             "name": "groupId"
           },
           "typeConverter": null,
@@ -500,7 +500,7 @@
           "nameInDart": "payerId",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 2948,
+            "offset": 1362,
             "name": "payerId"
           },
           "typeConverter": null,
@@ -521,7 +521,7 @@
           "nameInDart": "createdBy",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 3009,
+            "offset": 1400,
             "name": "createdBy"
           },
           "typeConverter": null,
@@ -542,7 +542,7 @@
           "nameInDart": "totalAmount",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 3049,
+            "offset": 1440,
             "name": "totalAmount"
           },
           "typeConverter": null,
@@ -563,7 +563,7 @@
           "nameInDart": "currency",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 3091,
+            "offset": 1482,
             "name": "currency"
           },
           "typeConverter": null,
@@ -593,7 +593,7 @@
           "nameInDart": "description",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 3165,
+            "offset": 1556,
             "name": "description"
           },
           "typeConverter": null,
@@ -614,7 +614,7 @@
           "nameInDart": "category",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 3207,
+            "offset": 1598,
             "name": "category"
           },
           "typeConverter": null,
@@ -644,7 +644,7 @@
           "nameInDart": "splitMode",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 3283,
+            "offset": 1674,
             "name": "splitMode"
           },
           "typeConverter": null,
@@ -674,7 +674,7 @@
           "nameInDart": "date",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 3364,
+            "offset": 1755,
             "name": "date"
           },
           "typeConverter": null,
@@ -695,7 +695,7 @@
           "nameInDart": "vectorClock",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 3455,
+            "offset": 1846,
             "name": "vectorClock"
           },
           "typeConverter": null,
@@ -725,7 +725,7 @@
           "nameInDart": "lastModifiedBy",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 3531,
+            "offset": 1922,
             "name": "lastModifiedBy"
           },
           "typeConverter": null,
@@ -746,7 +746,7 @@
           "nameInDart": "isDeleted",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 3576,
+            "offset": 1967,
             "name": "isDeleted"
           },
           "typeConverter": null,
@@ -769,57 +769,6 @@
         },
         {
           "sqlType": {
-            "builtin": "bool"
-          },
-          "nullable": false,
-          "nameInSql": "has_conflict",
-          "nameInDart": "hasConflict",
-          "declaration": {
-            "source_uri": "package:zplit/db/database.dart",
-            "offset": 3654,
-            "name": "hasConflict"
-          },
-          "typeConverter": null,
-          "clientDefaultCode": null,
-          "defaultArgument": {
-            "elements": [
-              "const ",
-              {
-                "lexeme": "Constant",
-                "import_uri": "package:drift/src/runtime/query_builder/query_builder.dart"
-              },
-              "(false)"
-            ]
-          },
-          "overriddenJsonName": null,
-          "referenceName": null,
-          "documentationComment": null,
-          "constraints": [],
-          "customConstraints": null
-        },
-        {
-          "sqlType": {
-            "builtin": "string"
-          },
-          "nullable": true,
-          "nameInSql": "conflict_details",
-          "nameInDart": "conflictDetails",
-          "declaration": {
-            "source_uri": "package:zplit/db/database.dart",
-            "offset": 3734,
-            "name": "conflictDetails"
-          },
-          "typeConverter": null,
-          "clientDefaultCode": null,
-          "defaultArgument": null,
-          "overriddenJsonName": null,
-          "referenceName": null,
-          "documentationComment": null,
-          "constraints": [],
-          "customConstraints": null
-        },
-        {
-          "sqlType": {
             "builtin": "dateTime"
           },
           "nullable": false,
@@ -827,7 +776,7 @@
           "nameInDart": "createdAt",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 3795,
+            "offset": 2050,
             "name": "createdAt"
           },
           "typeConverter": null,
@@ -848,7 +797,7 @@
           "nameInDart": "updatedAt",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 3843,
+            "offset": 2098,
             "name": "updatedAt"
           },
           "typeConverter": null,
@@ -889,7 +838,7 @@
       },
       "declaration": {
         "source_uri": "package:zplit/db/database.dart",
-        "offset": 4066,
+        "offset": 2222,
         "name": "Splits"
       },
       "references": [],
@@ -904,7 +853,7 @@
           "nameInDart": "id",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 4106,
+            "offset": 2262,
             "name": "id"
           },
           "typeConverter": null,
@@ -925,7 +874,7 @@
           "nameInDart": "transactionId",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 4139,
+            "offset": 2295,
             "name": "transactionId"
           },
           "typeConverter": null,
@@ -946,7 +895,7 @@
           "nameInDart": "debtorId",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 4209,
+            "offset": 2339,
             "name": "debtorId"
           },
           "typeConverter": null,
@@ -967,7 +916,7 @@
           "nameInDart": "owedShare",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 4271,
+            "offset": 2378,
             "name": "owedShare"
           },
           "typeConverter": null,
@@ -988,7 +937,7 @@
           "nameInDart": "rawInput",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 4311,
+            "offset": 2418,
             "name": "rawInput"
           },
           "typeConverter": null,
@@ -1018,7 +967,7 @@
           "nameInDart": "version",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 4380,
+            "offset": 2487,
             "name": "version"
           },
           "typeConverter": null,
@@ -1048,7 +997,7 @@
           "nameInDart": "isDeleted",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 4452,
+            "offset": 2559,
             "name": "isDeleted"
           },
           "typeConverter": null,
@@ -1078,7 +1027,7 @@
           "nameInDart": "isPaid",
           "declaration": {
             "source_uri": "package:zplit/db/database.dart",
-            "offset": 4530,
+            "offset": 2637,
             "name": "isPaid"
           },
           "typeConverter": null,
@@ -1123,9 +1072,6 @@
     }
   },
   "imports": [
-    "package:drift/drift.dart",
-    "package:drift/native.dart",
-    "package:path_provider/path_provider.dart",
-    "package:path/path.dart"
+    "package:drift/drift.dart"
   ]
 }

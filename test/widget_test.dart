@@ -9,8 +9,9 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // Verify the onboarding screen is shown
-    expect(find.text('Welcome to Zplit'), findsOneWidget);
+    // Verify the onboarding screen is shown with ZPLIT branding
+    expect(find.text('ZPLIT'), findsOneWidget);
+    expect(find.text('SIGN UP'), findsOneWidget);
     expect(find.text('Get Started'), findsOneWidget);
   });
 }

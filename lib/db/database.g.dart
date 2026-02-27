@@ -1094,32 +1094,6 @@ class $ExpensesTable extends Expenses with TableInfo<$ExpensesTable, Expense> {
     ),
     defaultValue: const Constant(false),
   );
-  static const VerificationMeta _hasConflictMeta = const VerificationMeta(
-    'hasConflict',
-  );
-  @override
-  late final GeneratedColumn<bool> hasConflict = GeneratedColumn<bool>(
-    'has_conflict',
-    aliasedName,
-    false,
-    type: DriftSqlType.bool,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("has_conflict" IN (0, 1))',
-    ),
-    defaultValue: const Constant(false),
-  );
-  static const VerificationMeta _conflictDetailsMeta = const VerificationMeta(
-    'conflictDetails',
-  );
-  @override
-  late final GeneratedColumn<String> conflictDetails = GeneratedColumn<String>(
-    'conflict_details',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
   );
@@ -1157,8 +1131,6 @@ class $ExpensesTable extends Expenses with TableInfo<$ExpensesTable, Expense> {
     vectorClock,
     lastModifiedBy,
     isDeleted,
-    hasConflict,
-    conflictDetails,
     createdAt,
     updatedAt,
   ];
@@ -1277,24 +1249,6 @@ class $ExpensesTable extends Expenses with TableInfo<$ExpensesTable, Expense> {
         isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
       );
     }
-    if (data.containsKey('has_conflict')) {
-      context.handle(
-        _hasConflictMeta,
-        hasConflict.isAcceptableOrUnknown(
-          data['has_conflict']!,
-          _hasConflictMeta,
-        ),
-      );
-    }
-    if (data.containsKey('conflict_details')) {
-      context.handle(
-        _conflictDetailsMeta,
-        conflictDetails.isAcceptableOrUnknown(
-          data['conflict_details']!,
-          _conflictDetailsMeta,
-        ),
-      );
-    }
     if (data.containsKey('created_at')) {
       context.handle(
         _createdAtMeta,
@@ -1372,14 +1326,6 @@ class $ExpensesTable extends Expenses with TableInfo<$ExpensesTable, Expense> {
         DriftSqlType.bool,
         data['${effectivePrefix}is_deleted'],
       )!,
-      hasConflict: attachedDatabase.typeMapping.read(
-        DriftSqlType.bool,
-        data['${effectivePrefix}has_conflict'],
-      )!,
-      conflictDetails: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}conflict_details'],
-      ),
       createdAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_at'],
@@ -1413,8 +1359,6 @@ class Expense extends DataClass implements Insertable<Expense> {
   final String vectorClock;
   final String lastModifiedBy;
   final bool isDeleted;
-  final bool hasConflict;
-  final String? conflictDetails;
   final DateTime createdAt;
   final DateTime updatedAt;
   const Expense({
@@ -1431,8 +1375,6 @@ class Expense extends DataClass implements Insertable<Expense> {
     required this.vectorClock,
     required this.lastModifiedBy,
     required this.isDeleted,
-    required this.hasConflict,
-    this.conflictDetails,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -1452,10 +1394,6 @@ class Expense extends DataClass implements Insertable<Expense> {
     map['vector_clock'] = Variable<String>(vectorClock);
     map['last_modified_by'] = Variable<String>(lastModifiedBy);
     map['is_deleted'] = Variable<bool>(isDeleted);
-    map['has_conflict'] = Variable<bool>(hasConflict);
-    if (!nullToAbsent || conflictDetails != null) {
-      map['conflict_details'] = Variable<String>(conflictDetails);
-    }
     map['created_at'] = Variable<DateTime>(createdAt);
     map['updated_at'] = Variable<DateTime>(updatedAt);
     return map;
@@ -1476,10 +1414,6 @@ class Expense extends DataClass implements Insertable<Expense> {
       vectorClock: Value(vectorClock),
       lastModifiedBy: Value(lastModifiedBy),
       isDeleted: Value(isDeleted),
-      hasConflict: Value(hasConflict),
-      conflictDetails: conflictDetails == null && nullToAbsent
-          ? const Value.absent()
-          : Value(conflictDetails),
       createdAt: Value(createdAt),
       updatedAt: Value(updatedAt),
     );
@@ -1504,8 +1438,6 @@ class Expense extends DataClass implements Insertable<Expense> {
       vectorClock: serializer.fromJson<String>(json['vectorClock']),
       lastModifiedBy: serializer.fromJson<String>(json['lastModifiedBy']),
       isDeleted: serializer.fromJson<bool>(json['isDeleted']),
-      hasConflict: serializer.fromJson<bool>(json['hasConflict']),
-      conflictDetails: serializer.fromJson<String?>(json['conflictDetails']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
@@ -1527,8 +1459,6 @@ class Expense extends DataClass implements Insertable<Expense> {
       'vectorClock': serializer.toJson<String>(vectorClock),
       'lastModifiedBy': serializer.toJson<String>(lastModifiedBy),
       'isDeleted': serializer.toJson<bool>(isDeleted),
-      'hasConflict': serializer.toJson<bool>(hasConflict),
-      'conflictDetails': serializer.toJson<String?>(conflictDetails),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
@@ -1548,8 +1478,6 @@ class Expense extends DataClass implements Insertable<Expense> {
     String? vectorClock,
     String? lastModifiedBy,
     bool? isDeleted,
-    bool? hasConflict,
-    Value<String?> conflictDetails = const Value.absent(),
     DateTime? createdAt,
     DateTime? updatedAt,
   }) => Expense(
@@ -1566,10 +1494,6 @@ class Expense extends DataClass implements Insertable<Expense> {
     vectorClock: vectorClock ?? this.vectorClock,
     lastModifiedBy: lastModifiedBy ?? this.lastModifiedBy,
     isDeleted: isDeleted ?? this.isDeleted,
-    hasConflict: hasConflict ?? this.hasConflict,
-    conflictDetails: conflictDetails.present
-        ? conflictDetails.value
-        : this.conflictDetails,
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
   );
@@ -1596,12 +1520,6 @@ class Expense extends DataClass implements Insertable<Expense> {
           ? data.lastModifiedBy.value
           : this.lastModifiedBy,
       isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
-      hasConflict: data.hasConflict.present
-          ? data.hasConflict.value
-          : this.hasConflict,
-      conflictDetails: data.conflictDetails.present
-          ? data.conflictDetails.value
-          : this.conflictDetails,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
@@ -1623,8 +1541,6 @@ class Expense extends DataClass implements Insertable<Expense> {
           ..write('vectorClock: $vectorClock, ')
           ..write('lastModifiedBy: $lastModifiedBy, ')
           ..write('isDeleted: $isDeleted, ')
-          ..write('hasConflict: $hasConflict, ')
-          ..write('conflictDetails: $conflictDetails, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt')
           ..write(')'))
@@ -1646,8 +1562,6 @@ class Expense extends DataClass implements Insertable<Expense> {
     vectorClock,
     lastModifiedBy,
     isDeleted,
-    hasConflict,
-    conflictDetails,
     createdAt,
     updatedAt,
   );
@@ -1668,8 +1582,6 @@ class Expense extends DataClass implements Insertable<Expense> {
           other.vectorClock == this.vectorClock &&
           other.lastModifiedBy == this.lastModifiedBy &&
           other.isDeleted == this.isDeleted &&
-          other.hasConflict == this.hasConflict &&
-          other.conflictDetails == this.conflictDetails &&
           other.createdAt == this.createdAt &&
           other.updatedAt == this.updatedAt);
 }
@@ -1688,8 +1600,6 @@ class ExpensesCompanion extends UpdateCompanion<Expense> {
   final Value<String> vectorClock;
   final Value<String> lastModifiedBy;
   final Value<bool> isDeleted;
-  final Value<bool> hasConflict;
-  final Value<String?> conflictDetails;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
   final Value<int> rowid;
@@ -1707,8 +1617,6 @@ class ExpensesCompanion extends UpdateCompanion<Expense> {
     this.vectorClock = const Value.absent(),
     this.lastModifiedBy = const Value.absent(),
     this.isDeleted = const Value.absent(),
-    this.hasConflict = const Value.absent(),
-    this.conflictDetails = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -1727,8 +1635,6 @@ class ExpensesCompanion extends UpdateCompanion<Expense> {
     this.vectorClock = const Value.absent(),
     required String lastModifiedBy,
     this.isDeleted = const Value.absent(),
-    this.hasConflict = const Value.absent(),
-    this.conflictDetails = const Value.absent(),
     required DateTime createdAt,
     required DateTime updatedAt,
     this.rowid = const Value.absent(),
@@ -1756,8 +1662,6 @@ class ExpensesCompanion extends UpdateCompanion<Expense> {
     Expression<String>? vectorClock,
     Expression<String>? lastModifiedBy,
     Expression<bool>? isDeleted,
-    Expression<bool>? hasConflict,
-    Expression<String>? conflictDetails,
     Expression<DateTime>? createdAt,
     Expression<DateTime>? updatedAt,
     Expression<int>? rowid,
@@ -1776,8 +1680,6 @@ class ExpensesCompanion extends UpdateCompanion<Expense> {
       if (vectorClock != null) 'vector_clock': vectorClock,
       if (lastModifiedBy != null) 'last_modified_by': lastModifiedBy,
       if (isDeleted != null) 'is_deleted': isDeleted,
-      if (hasConflict != null) 'has_conflict': hasConflict,
-      if (conflictDetails != null) 'conflict_details': conflictDetails,
       if (createdAt != null) 'created_at': createdAt,
       if (updatedAt != null) 'updated_at': updatedAt,
       if (rowid != null) 'rowid': rowid,
@@ -1798,8 +1700,6 @@ class ExpensesCompanion extends UpdateCompanion<Expense> {
     Value<String>? vectorClock,
     Value<String>? lastModifiedBy,
     Value<bool>? isDeleted,
-    Value<bool>? hasConflict,
-    Value<String?>? conflictDetails,
     Value<DateTime>? createdAt,
     Value<DateTime>? updatedAt,
     Value<int>? rowid,
@@ -1818,8 +1718,6 @@ class ExpensesCompanion extends UpdateCompanion<Expense> {
       vectorClock: vectorClock ?? this.vectorClock,
       lastModifiedBy: lastModifiedBy ?? this.lastModifiedBy,
       isDeleted: isDeleted ?? this.isDeleted,
-      hasConflict: hasConflict ?? this.hasConflict,
-      conflictDetails: conflictDetails ?? this.conflictDetails,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       rowid: rowid ?? this.rowid,
@@ -1868,12 +1766,6 @@ class ExpensesCompanion extends UpdateCompanion<Expense> {
     if (isDeleted.present) {
       map['is_deleted'] = Variable<bool>(isDeleted.value);
     }
-    if (hasConflict.present) {
-      map['has_conflict'] = Variable<bool>(hasConflict.value);
-    }
-    if (conflictDetails.present) {
-      map['conflict_details'] = Variable<String>(conflictDetails.value);
-    }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
@@ -1902,8 +1794,6 @@ class ExpensesCompanion extends UpdateCompanion<Expense> {
           ..write('vectorClock: $vectorClock, ')
           ..write('lastModifiedBy: $lastModifiedBy, ')
           ..write('isDeleted: $isDeleted, ')
-          ..write('hasConflict: $hasConflict, ')
-          ..write('conflictDetails: $conflictDetails, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt, ')
           ..write('rowid: $rowid')
@@ -2928,8 +2818,6 @@ typedef $$ExpensesTableCreateCompanionBuilder =
       Value<String> vectorClock,
       required String lastModifiedBy,
       Value<bool> isDeleted,
-      Value<bool> hasConflict,
-      Value<String?> conflictDetails,
       required DateTime createdAt,
       required DateTime updatedAt,
       Value<int> rowid,
@@ -2949,8 +2837,6 @@ typedef $$ExpensesTableUpdateCompanionBuilder =
       Value<String> vectorClock,
       Value<String> lastModifiedBy,
       Value<bool> isDeleted,
-      Value<bool> hasConflict,
-      Value<String?> conflictDetails,
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt,
       Value<int> rowid,
@@ -3027,16 +2913,6 @@ class $$ExpensesTableFilterComposer
 
   ColumnFilters<bool> get isDeleted => $composableBuilder(
     column: $table.isDeleted,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<bool> get hasConflict => $composableBuilder(
-    column: $table.hasConflict,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get conflictDetails => $composableBuilder(
-    column: $table.conflictDetails,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -3125,16 +3001,6 @@ class $$ExpensesTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<bool> get hasConflict => $composableBuilder(
-    column: $table.hasConflict,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get conflictDetails => $composableBuilder(
-    column: $table.conflictDetails,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<DateTime> get createdAt => $composableBuilder(
     column: $table.createdAt,
     builder: (column) => ColumnOrderings(column),
@@ -3202,16 +3068,6 @@ class $$ExpensesTableAnnotationComposer
   GeneratedColumn<bool> get isDeleted =>
       $composableBuilder(column: $table.isDeleted, builder: (column) => column);
 
-  GeneratedColumn<bool> get hasConflict => $composableBuilder(
-    column: $table.hasConflict,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get conflictDetails => $composableBuilder(
-    column: $table.conflictDetails,
-    builder: (column) => column,
-  );
-
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
 
@@ -3260,8 +3116,6 @@ class $$ExpensesTableTableManager
                 Value<String> vectorClock = const Value.absent(),
                 Value<String> lastModifiedBy = const Value.absent(),
                 Value<bool> isDeleted = const Value.absent(),
-                Value<bool> hasConflict = const Value.absent(),
-                Value<String?> conflictDetails = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -3279,8 +3133,6 @@ class $$ExpensesTableTableManager
                 vectorClock: vectorClock,
                 lastModifiedBy: lastModifiedBy,
                 isDeleted: isDeleted,
-                hasConflict: hasConflict,
-                conflictDetails: conflictDetails,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
                 rowid: rowid,
@@ -3300,8 +3152,6 @@ class $$ExpensesTableTableManager
                 Value<String> vectorClock = const Value.absent(),
                 required String lastModifiedBy,
                 Value<bool> isDeleted = const Value.absent(),
-                Value<bool> hasConflict = const Value.absent(),
-                Value<String?> conflictDetails = const Value.absent(),
                 required DateTime createdAt,
                 required DateTime updatedAt,
                 Value<int> rowid = const Value.absent(),
@@ -3319,8 +3169,6 @@ class $$ExpensesTableTableManager
                 vectorClock: vectorClock,
                 lastModifiedBy: lastModifiedBy,
                 isDeleted: isDeleted,
-                hasConflict: hasConflict,
-                conflictDetails: conflictDetails,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
                 rowid: rowid,

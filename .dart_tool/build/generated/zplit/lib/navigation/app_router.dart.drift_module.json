@@ -6,6 +6,7 @@
     "package:zplit/providers/user_provider.dart",
     "package:zplit/screens/onboarding_screen.dart",
     "package:zplit/screens/home_screen.dart",
+    "package:zplit/screens/settings_screen.dart",
     "package:zplit/screens/create_group_screen.dart",
     "package:zplit/screens/group_detail_screen.dart",
     "package:zplit/screens/add_expense_screen.dart"

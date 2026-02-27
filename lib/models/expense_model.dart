@@ -117,11 +117,7 @@ class ExpenseModel extends Equatable {
   /// When true, this expense is logically deleted but kept for sync.
   final bool isDeleted;
 
-  /// Whether a sync conflict has been detected.
-  final bool hasConflict;
 
-  /// Human-readable details about the conflict, if any.
-  final String? conflictDetails;
 
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -140,8 +136,6 @@ class ExpenseModel extends Equatable {
     required this.vectorClock,
     required this.lastModifiedBy,
     this.isDeleted = false,
-    this.hasConflict = false,
-    this.conflictDetails,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -189,21 +183,7 @@ class ExpenseModel extends Equatable {
     );
   }
 
-  /// Marks this expense as having a sync conflict.
-  ExpenseModel withConflict(String details) {
-    return copyWith(
-      hasConflict: true,
-      conflictDetails: details,
-    );
-  }
 
-  /// Resolves the conflict, clearing the flag.
-  ExpenseModel resolveConflict() {
-    return copyWith(
-      hasConflict: false,
-      conflictDetails: null,
-    );
-  }
 
   /// Soft-deletes this expense (Image 3: is_deleted).
   ExpenseModel softDelete(String deviceId, String modifiedBy) {
@@ -227,8 +207,6 @@ class ExpenseModel extends Equatable {
     VectorClock? vectorClock,
     String? lastModifiedBy,
     bool? isDeleted,
-    bool? hasConflict,
-    String? conflictDetails,
     DateTime? updatedAt,
   }) {
     return ExpenseModel(
@@ -245,8 +223,6 @@ class ExpenseModel extends Equatable {
       vectorClock: vectorClock ?? this.vectorClock,
       lastModifiedBy: lastModifiedBy ?? this.lastModifiedBy,
       isDeleted: isDeleted ?? this.isDeleted,
-      hasConflict: hasConflict ?? this.hasConflict,
-      conflictDetails: conflictDetails ?? this.conflictDetails,
       createdAt: createdAt,
       updatedAt: updatedAt ?? DateTime.now(),
     );
@@ -266,8 +242,6 @@ class ExpenseModel extends Equatable {
         'vectorClock': vectorClock.clock,
         'lastModifiedBy': lastModifiedBy,
         'isDeleted': isDeleted,
-        'hasConflict': hasConflict,
-        'conflictDetails': conflictDetails,
         'createdAt': createdAt.toIso8601String(),
         'updatedAt': updatedAt.toIso8601String(),
       };
@@ -295,8 +269,6 @@ class ExpenseModel extends Equatable {
         ),
         lastModifiedBy: json['lastModifiedBy'] as String,
         isDeleted: json['isDeleted'] as bool? ?? false,
-        hasConflict: json['hasConflict'] as bool? ?? false,
-        conflictDetails: json['conflictDetails'] as String?,
         createdAt: DateTime.parse(json['createdAt'] as String),
         updatedAt: DateTime.parse(json['updatedAt'] as String),
       );
@@ -305,6 +277,6 @@ class ExpenseModel extends Equatable {
   List<Object?> get props => [
         id, groupId, payerId, createdBy, description, totalAmount,
         currency, category, splitMode, date, vectorClock, lastModifiedBy,
-        isDeleted, hasConflict, conflictDetails, createdAt, updatedAt,
+        isDeleted, createdAt, updatedAt,
       ];
 }

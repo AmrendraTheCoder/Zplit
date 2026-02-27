@@ -178,4 +178,87 @@ void main() {
       expect(result[1].owedShare, 0);
     });
   });
+
+  group('Penny-rounding fairness', () {
+    test('distributes remainder cents round-robin (3 people, ₹100)', () {
+      final splits = [
+        makeSplit(debtorId: 'A'),
+        makeSplit(debtorId: 'B'),
+        makeSplit(debtorId: 'C'),
+      ];
+      final result = service.calculateSplits(100, splits, SplitMode.equal);
+      // 100 / 3 = 33.33 each, remainder = 1 cent → person A gets it
+      expect(result[0].owedShare, closeTo(33.34, 0.01));
+      expect(result[1].owedShare, closeTo(33.33, 0.01));
+      expect(result[2].owedShare, closeTo(33.33, 0.01));
+      // Total should still be 100
+      final total = result.fold<double>(0, (s, e) => s + e.owedShare);
+      expect(total, closeTo(100, 0.01));
+    });
+
+    test('distributes multiple remainder cents (6 people, ₹100)', () {
+      final splits = List.generate(6, (i) => makeSplit(debtorId: 'P$i'));
+      final result = service.calculateSplits(100, splits, SplitMode.equal);
+      // 100 / 6 = 16.66 each, 10000 cents / 6 = 1666 each, remainder = 4 cents
+      // First 4 people get 16.67, last 2 get 16.66
+      final total = result.fold<double>(0, (s, e) => s + e.owedShare);
+      expect(total, closeTo(100, 0.01));
+    });
+  });
+
+  group('recalculateOnMemberChange', () {
+    test('adding a member redistributes equal splits', () {
+      final existing = [
+        makeSplit(debtorId: 'A'),
+        makeSplit(debtorId: 'B'),
+      ];
+      final result = service.recalculateOnMemberChange(
+        totalAmount: 300,
+        currentSplits: existing,
+        newMemberIds: ['A', 'B', 'C'],
+        transactionId: 'expense-1',
+        splitMode: SplitMode.equal,
+      );
+      expect(result.length, 3);
+      expect(result[0].owedShare, 100);
+      expect(result[1].owedShare, 100);
+      expect(result[2].owedShare, 100);
+    });
+
+    test('removing a member redistributes equal splits', () {
+      final existing = [
+        makeSplit(debtorId: 'A'),
+        makeSplit(debtorId: 'B'),
+        makeSplit(debtorId: 'C'),
+      ];
+      final result = service.recalculateOnMemberChange(
+        totalAmount: 300,
+        currentSplits: existing,
+        newMemberIds: ['A', 'B'],
+        transactionId: 'expense-1',
+        splitMode: SplitMode.equal,
+      );
+      expect(result.length, 2);
+      expect(result[0].owedShare, 150);
+      expect(result[1].owedShare, 150);
+    });
+
+    test('adding member to percent splits starts at 0%', () {
+      final existing = [
+        makeSplit(debtorId: 'A', rawInput: 60),
+        makeSplit(debtorId: 'B', rawInput: 40),
+      ];
+      final result = service.recalculateOnMemberChange(
+        totalAmount: 1000,
+        currentSplits: existing,
+        newMemberIds: ['A', 'B', 'C'],
+        transactionId: 'expense-1',
+        splitMode: SplitMode.percent,
+      );
+      expect(result.length, 3);
+      expect(result[0].owedShare, 600); // 60%
+      expect(result[1].owedShare, 400); // 40%
+      expect(result[2].owedShare, 0);   // 0% — user must adjust
+    });
+  });
 }

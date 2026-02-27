@@ -214,12 +214,41 @@ void main() {
       expect(outcome.result, SyncResult.ignored);
     });
 
-    test('concurrent edits → conflict', () {
-      final localExpense = makeExpense(
-        clock: const VectorClock({'A': 3, 'B': 1}),
+    test('concurrent edits → LWW remote wins (more recent)', () {
+      final localExpense = ExpenseModel(
+        id: 'exp-1',
+        groupId: 'group-1',
+        payerId: 'user-a',
+        createdBy: 'user-a',
+        description: 'Test Dinner',
+        totalAmount: 3000,
+        currency: 'INR',
+        category: ExpenseCategory.food,
+        splitMode: SplitMode.percent,
+        date: DateTime(2026, 2, 25),
+        vectorClock: const VectorClock({'A': 3, 'B': 1}),
+        lastModifiedBy: 'user-a',
+        createdAt: DateTime(2026, 2, 25),
+        updatedAt: DateTime(2026, 2, 25, 10, 0), // 10:00 AM
+      );
+      final remoteExpense = ExpenseModel(
+        id: 'exp-1',
+        groupId: 'group-1',
+        payerId: 'user-a',
+        createdBy: 'user-a',
+        description: 'Test Dinner',
+        totalAmount: 3000,
+        currency: 'INR',
+        category: ExpenseCategory.food,
+        splitMode: SplitMode.percent,
+        date: DateTime(2026, 2, 25),
+        vectorClock: const VectorClock({'A': 2, 'B': 2}),
+        lastModifiedBy: 'user-b',
+        createdAt: DateTime(2026, 2, 25),
+        updatedAt: DateTime(2026, 2, 25, 11, 0), // 11:00 AM — more recent
       );
       final incoming = SyncUnit.bundle(
-        expense: makeExpense(clock: const VectorClock({'A': 2, 'B': 2})),
+        expense: remoteExpense,
         splits: makeSplits(),
         deviceId: 'device-B',
       );
@@ -229,9 +258,54 @@ void main() {
         localExpense: localExpense,
       );
 
-      expect(outcome.result, SyncResult.conflict);
-      expect(outcome.conflictDetails, isNotNull);
-      expect(outcome.syncUnit.expense.hasConflict, true);
+      expect(outcome.result, SyncResult.autoResolved);
+    });
+
+    test('concurrent edits → LWW local wins (local more recent)', () {
+      final localExpense = ExpenseModel(
+        id: 'exp-1',
+        groupId: 'group-1',
+        payerId: 'user-a',
+        createdBy: 'user-a',
+        description: 'Test Dinner',
+        totalAmount: 3000,
+        currency: 'INR',
+        category: ExpenseCategory.food,
+        splitMode: SplitMode.percent,
+        date: DateTime(2026, 2, 25),
+        vectorClock: const VectorClock({'A': 3, 'B': 1}),
+        lastModifiedBy: 'user-a',
+        createdAt: DateTime(2026, 2, 25),
+        updatedAt: DateTime(2026, 2, 25, 12, 0), // noon — more recent
+      );
+      final remoteExpense = ExpenseModel(
+        id: 'exp-1',
+        groupId: 'group-1',
+        payerId: 'user-a',
+        createdBy: 'user-a',
+        description: 'Test Dinner',
+        totalAmount: 3000,
+        currency: 'INR',
+        category: ExpenseCategory.food,
+        splitMode: SplitMode.percent,
+        date: DateTime(2026, 2, 25),
+        vectorClock: const VectorClock({'A': 2, 'B': 2}),
+        lastModifiedBy: 'user-b',
+        createdAt: DateTime(2026, 2, 25),
+        updatedAt: DateTime(2026, 2, 25, 9, 0), // 9 AM — older
+      );
+      final incoming = SyncUnit.bundle(
+        expense: remoteExpense,
+        splits: makeSplits(),
+        deviceId: 'device-B',
+      );
+
+      final outcome = service.apply(
+        incoming: incoming,
+        localExpense: localExpense,
+      );
+
+      expect(outcome.result, SyncResult.ignored);
     });
   });
 

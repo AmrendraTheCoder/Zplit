@@ -12,8 +12,8 @@ enum SyncResult {
   /// Local is newer — remote is outdated, ignore it.
   ignored,
 
-  /// Clocks are concurrent — conflict detected, needs resolution.
-  conflict,
+  /// Concurrent edit — auto-resolved via Last-Writer-Wins (latest updatedAt).
+  autoResolved,
 
   /// First time seeing this expense — insert it.
   newEntry,
@@ -23,16 +23,14 @@ enum SyncResult {
 class SyncOutcome {
   final SyncResult result;
   final SyncUnit syncUnit;
-  final String? conflictDetails;
 
   const SyncOutcome({
     required this.result,
     required this.syncUnit,
-    this.conflictDetails,
   });
 }
 
-/// Service for bundling, unbundling, and applying Sync Units (Image 7).
+/// Service for bundling, unbundling, and applying Sync Units.
 ///
 /// This is the core P2P transfer logic. A Sync Unit is the atomic
 /// unit of data exchange between devices:
@@ -45,14 +43,12 @@ class SyncOutcome {
 /// The service handles:
 /// 1. **Bundling**: Package an expense + splits into a JSON string
 /// 2. **Unbundling**: Parse a received JSON string back into models
-/// 3. **Applying**: Compare vector clocks and decide: update, ignore, or conflict
+/// 3. **Applying**: Compare vector clocks and decide: update, ignore, or LWW
 class SyncUnitService {
   const SyncUnitService();
 
   /// Bundles an expense and its splits into a [SyncUnit] ready for
   /// P2P transfer.
-  ///
-  /// The [deviceId] identifies which device is sending this bundle.
   SyncUnit bundle({
     required ExpenseModel expense,
     required List<SplitModel> splits,
@@ -66,15 +62,11 @@ class SyncUnitService {
   }
 
   /// Serializes a [SyncUnit] to a JSON "Transfer String" for P2P.
-  ///
-  /// This is what gets sent over WiFi Direct / Bluetooth / NFC.
   String serialize(SyncUnit syncUnit) {
     return jsonEncode(syncUnit.toJson());
   }
 
   /// Deserializes a received JSON string back into a [SyncUnit].
-  ///
-  /// Throws [FormatException] if the JSON is invalid.
   SyncUnit deserialize(String json) {
     try {
       final map = jsonDecode(json) as Map<String, dynamic>;
@@ -89,14 +81,15 @@ class SyncUnitService {
 
   /// Applies an incoming [SyncUnit] against the local state.
   ///
-  /// Uses Vector Clock comparison to determine the correct action:
+  /// Uses Vector Clock comparison for causal ordering, with
+  /// **Last-Writer-Wins (LWW)** auto-resolution for concurrent edits:
   ///
   /// | Local Clock vs Remote Clock | Action |
   /// |---|---|
   /// | No local expense exists | Accept (new entry) |
   /// | Local `before` Remote | Update local with remote |
   /// | Local `after` Remote | Ignore (remote is outdated) |
-  /// | `concurrent` | Mark conflict, keep both |
+  /// | `concurrent` | LWW: latest `updatedAt` wins |
   /// | `identical` | No-op (already synced) |
   SyncOutcome apply({
     required SyncUnit incoming,
@@ -138,34 +131,25 @@ class SyncUnitService {
         );
 
       case ClockRelation.concurrent:
-        // CONFLICT! Two devices edited independently.
-        // Mark the incoming expense with the conflict flag.
-        final conflictMsg =
-            'Concurrent edit detected. '
-            'Local clock: ${localExpense.vectorClock}, '
-            'Remote clock: ${incoming.expense.vectorClock}. '
-            'From device: ${incoming.originDeviceId}';
-
-        final conflictedUnit = SyncUnit(
-          expense: incoming.expense.withConflict(conflictMsg),
-          splits: incoming.splits,
-          originDeviceId: incoming.originDeviceId,
-          timestamp: incoming.timestamp,
-          signature: incoming.signature,
-        );
-
-        return SyncOutcome(
-          result: SyncResult.conflict,
-          syncUnit: conflictedUnit,
-          conflictDetails: conflictMsg,
-        );
+        // LWW: most recent updatedAt wins automatically.
+        // No conflict flags, no manual resolution needed.
+        if (incoming.expense.updatedAt.isAfter(localExpense.updatedAt)) {
+          // Remote is more recent — accept it
+          return SyncOutcome(
+            result: SyncResult.autoResolved,
+            syncUnit: incoming,
+          );
+        } else {
+          // Local is more recent (or equal) — keep local
+          return SyncOutcome(
+            result: SyncResult.ignored,
+            syncUnit: incoming,
+          );
+        }
     }
   }
 
   /// Merges vector clocks after accepting a remote update.
-  ///
-  /// Call this after [apply] returns [SyncResult.updated] to ensure
-  /// the local clock reflects both local and remote history.
   VectorClock mergeClocks(VectorClock local, VectorClock remote) {
     return local.merge(remote);
   }
