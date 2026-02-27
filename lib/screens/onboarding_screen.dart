@@ -174,7 +174,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
       child: SafeArea(
         bottom: false,
         child: Padding(
-          padding: const EdgeInsets.only(bottom: 24, top: 16),
+          padding: const EdgeInsets.only(bottom: 24, top: 20),
           child: Column(
             children: [
               // Logo icon

@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/expense_model.dart';
 import '../models/split_model.dart';
+import '../providers/group_provider.dart';
 import 'database_provider.dart';
 
 /// Provider for all expenses across all groups.
@@ -61,6 +62,63 @@ final userGroupBalanceProvider =
   }
 
   return double.parse(balance.toStringAsFixed(2));
+});
+
+/// Derived provider: pairwise balance between two users in a group.
+///
+/// Positive = [userId] is owed by [otherUserId] (they owe you).
+/// Negative = [userId] owes [otherUserId] (you owe them).
+final pairwiseBalanceProvider = Provider.family<double,
+    ({String userId, String otherUserId, String groupId})>((ref, params) {
+  final expenses = ref.watch(groupExpensesProvider(params.groupId));
+  final allSplits = ref.watch(splitsProvider);
+
+  double balance = 0;
+
+  for (final expense in expenses) {
+    final splits =
+        allSplits.where((s) => s.transactionId == expense.id && !s.isDeleted).toList();
+
+    if (expense.payerId == params.userId) {
+      // User paid — otherUser owes their share to user
+      final otherSplit = splits.where((s) => s.debtorId == params.otherUserId);
+      if (otherSplit.isNotEmpty) {
+        balance += otherSplit.first.owedShare;
+      }
+    } else if (expense.payerId == params.otherUserId) {
+      // OtherUser paid — user owes their share to otherUser
+      final userSplit = splits.where((s) => s.debtorId == params.userId);
+      if (userSplit.isNotEmpty) {
+        balance -= userSplit.first.owedShare;
+      }
+    }
+  }
+
+  return double.parse(balance.toStringAsFixed(2));
+});
+
+/// Derived provider: all pairwise balances for a user in a group.
+/// Returns a Map of (memberId -> balance) for all other members.
+final groupMemberBalancesProvider = Provider.family<Map<String, double>,
+    ({String userId, String groupId})>((ref, params) {
+  final group = ref.watch(
+    Provider<List<String>>((r) {
+      final groups = r.watch(groupsProvider);
+      final g = groups.where((g) => g.id == params.groupId).firstOrNull;
+      return g?.memberIds ?? [];
+    }),
+  );
+
+  final Map<String, double> balances = {};
+  for (final memberId in group) {
+    if (memberId == params.userId) continue;
+    balances[memberId] = ref.watch(pairwiseBalanceProvider((
+      userId: params.userId,
+      otherUserId: memberId,
+      groupId: params.groupId,
+    )));
+  }
+  return balances;
 });
 
 /// Derived provider: total group spending.

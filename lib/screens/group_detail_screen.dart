@@ -68,7 +68,7 @@ class GroupDetailScreen extends ConsumerWidget {
                 children: [
                   // Nav bar
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    padding: const EdgeInsets.fromLTRB(4, 8, 4, 0),
                     child: Row(
                       children: [
                         IconButton(
@@ -89,7 +89,7 @@ class GroupDetailScreen extends ConsumerWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () => _showGroupOptions(context, ref, groupId),
                           icon: const Icon(Icons.more_vert_rounded,
                               color: Colors.white),
                         ),
@@ -170,7 +170,7 @@ class GroupDetailScreen extends ConsumerWidget {
                             icon: Icons.bar_chart_rounded,
                             accent: accent,
                             filled: false,
-                            onTap: () {},
+                            onTap: () => _showBalances(context, ref, groupId, user?.id ?? '', allUsers, group.memberIds, accent, isDark),
                           ),
                         ),
                       ],
@@ -322,6 +322,110 @@ class GroupDetailScreen extends ConsumerWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  static void _showGroupOptions(BuildContext context, WidgetRef ref, String groupId) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) => Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.edit_outlined),
+              title: const Text('Edit Group'),
+              onTap: () => Navigator.pop(ctx),
+            ),
+            ListTile(
+              leading: const Icon(Icons.person_add_outlined),
+              title: const Text('Add Member'),
+              onTap: () => Navigator.pop(ctx),
+            ),
+            ListTile(
+              leading: const Icon(Icons.share_outlined),
+              title: const Text('Share Group'),
+              onTap: () => Navigator.pop(ctx),
+            ),
+            const SizedBox(height: 8),
+          ],
+        ),
+      ),
+    );
+  }
+
+  static void _showBalances(
+    BuildContext context,
+    WidgetRef ref,
+    String groupId,
+    String currentUserId,
+    List allUsers,
+    List<String> memberIds,
+    Color accent,
+    bool isDark,
+  ) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) => Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Balances',
+                style: Theme.of(context).textTheme.headlineSmall),
+            const SizedBox(height: 16),
+            ...memberIds.where((id) => id != currentUserId).map((memberId) {
+              final member = allUsers
+                  .where((u) => u.id == memberId)
+                  .firstOrNull;
+              final name = member?.displayName ?? 'Member';
+              final balance = ref.read(pairwiseBalanceProvider((
+                userId: currentUserId,
+                otherUserId: memberId,
+                groupId: groupId,
+              )));
+              final isOwed = balance > 0;
+              final color = balance.abs() < 0.01
+                  ? (isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)
+                  : (isOwed ? AppColors.moneyOwedTo : AppColors.moneyOwed);
+              final label = balance.abs() < 0.01
+                  ? 'settled up'
+                  : (isOwed ? 'owes you' : 'you owe');
+
+              return ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: AppColors.avatarColors[
+                      memberIds.indexOf(memberId) % AppColors.avatarColors.length],
+                  child: Text(
+                    name.isNotEmpty ? name[0].toUpperCase() : '?',
+                    style: const TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.w700),
+                  ),
+                ),
+                title: Text(name),
+                subtitle: Text(label, style: TextStyle(color: color, fontSize: 12)),
+                trailing: Text(
+                  '₹${balance.abs().toStringAsFixed(0)}',
+                  style: TextStyle(
+                    color: color,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16,
+                  ),
+                ),
+              );
+            }),
+            const SizedBox(height: 8),
           ],
         ),
       ),

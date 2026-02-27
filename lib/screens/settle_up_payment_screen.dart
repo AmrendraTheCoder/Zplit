@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../providers/user_provider.dart';
-
 import '../providers/expense_provider.dart';
+import '../models/expense_model.dart';
+import '../models/split_model.dart';
+
 import '../theme/app_colors.dart';
 
 /// Settle Up — Payment Method Screen.
 ///
 /// Shows transfer visualization (avatar → arrow → avatar),
 /// payment method choices, and Settle Up button.
+/// Actually records a settlement expense on confirm.
 class SettleUpPaymentScreen extends ConsumerStatefulWidget {
   final String groupId;
   final String memberId;
@@ -56,6 +59,59 @@ class _SettleUpPaymentScreenState
     ),
   ];
 
+  void _settleUp() {
+    final user = ref.read(currentUserProvider);
+    if (user == null) return;
+
+    // Get the pairwise balance
+    final pairBalance = ref.read(pairwiseBalanceProvider((
+      userId: user.id,
+      otherUserId: widget.memberId,
+      groupId: widget.groupId,
+    )));
+
+    final amount = pairBalance.abs();
+    if (amount < 0.01) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Nothing to settle!'), behavior: SnackBarBehavior.floating),
+      );
+      return;
+    }
+
+    // Determine who pays whom
+    // Negative pairBalance = user owes member → user pays member
+    // Positive pairBalance = member owes user → member pays user
+    final payerId = pairBalance < 0 ? user.id : widget.memberId;
+    final debtorId = pairBalance < 0 ? widget.memberId : user.id;
+
+    // Create a settlement expense (category: other, description: Settlement)
+    final expense = ExpenseModel.create(
+      groupId: widget.groupId,
+      description: 'Settlement',
+      totalAmount: amount,
+      currency: '₹',
+      payerId: payerId,
+      createdBy: user.id,
+      category: ExpenseCategory.other,
+      splitMode: SplitMode.exact,
+      deviceId: user.deviceId,
+    );
+
+    // Create a single split where the debtor owes the full amount
+    final split = SplitModel.create(
+      transactionId: expense.id,
+      debtorId: debtorId,
+      rawInput: amount,
+      owedShare: amount,
+    );
+
+    ref.read(expensesProvider.notifier).addExpense(expense);
+    ref.read(splitsProvider.notifier).addSplits([split]);
+
+    // Navigate to success
+    context.go('/group/${widget.groupId}/settle-up/${widget.memberId}/success');
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = ref.watch(currentUserProvider);
@@ -70,9 +126,17 @@ class _SettleUpPaymentScreenState
         memberName.isNotEmpty ? memberName[0].toUpperCase() : '?';
     final userInitial = user?.initials ?? '?';
 
-    final balance = ref.watch(userGroupBalanceProvider(
-      (userId: user?.id ?? '', groupId: widget.groupId),
-    ));
+    // Use PAIRWISE balance
+    final pairBalance = ref.watch(pairwiseBalanceProvider((
+      userId: user?.id ?? '',
+      otherUserId: widget.memberId,
+      groupId: widget.groupId,
+    )));
+
+    final isUserOwing = pairBalance < 0;
+    final oweSummary = isUserOwing
+        ? 'You owe $memberName'
+        : '$memberName owes you';
 
     return Scaffold(
       appBar: AppBar(
@@ -96,13 +160,9 @@ class _SettleUpPaymentScreenState
             text: TextSpan(
               style: Theme.of(context).textTheme.bodyMedium,
               children: [
-                const TextSpan(text: 'You owe '),
+                TextSpan(text: '$oweSummary '),
                 TextSpan(
-                  text: memberName,
-                  style: const TextStyle(fontWeight: FontWeight.w700),
-                ),
-                TextSpan(
-                  text: ' ₹${balance.abs().toStringAsFixed(0)}.',
+                  text: '₹${pairBalance.abs().toStringAsFixed(0)}.',
                   style: const TextStyle(fontWeight: FontWeight.w700),
                 ),
               ],
@@ -111,15 +171,17 @@ class _SettleUpPaymentScreenState
 
           const SizedBox(height: 24),
 
-          // Transfer visualization: User → arrow → Member
+          // Transfer visualization
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CircleAvatar(
                 radius: 26,
-                backgroundColor: AppColors.avatarColors[0],
+                backgroundColor: isUserOwing
+                    ? AppColors.avatarColors[0]
+                    : AppColors.moneyOwed,
                 child: Text(
-                  userInitial,
+                  isUserOwing ? userInitial : memberInitial,
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w700,
@@ -136,9 +198,11 @@ class _SettleUpPaymentScreenState
               const SizedBox(width: 16),
               CircleAvatar(
                 radius: 26,
-                backgroundColor: AppColors.moneyOwed,
+                backgroundColor: isUserOwing
+                    ? AppColors.moneyOwed
+                    : AppColors.avatarColors[0],
                 child: Text(
-                  memberInitial,
+                  isUserOwing ? memberInitial : userInitial,
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w700,
@@ -192,7 +256,9 @@ class _SettleUpPaymentScreenState
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: isSelected ? accent : AppColors.textTertiaryLight,
+                              color: isSelected
+                                  ? accent
+                                  : AppColors.textTertiaryLight,
                               width: 2,
                             ),
                           ),
@@ -254,11 +320,7 @@ class _SettleUpPaymentScreenState
               width: double.infinity,
               height: 52,
               child: ElevatedButton(
-                onPressed: _selectedMethod >= 0
-                    ? () => context.push(
-                          '/group/${widget.groupId}/settle-up/${widget.memberId}/success',
-                        )
-                    : null,
+                onPressed: _selectedMethod >= 0 ? _settleUp : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: accent,
                   foregroundColor: Colors.white,

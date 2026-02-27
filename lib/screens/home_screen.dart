@@ -55,7 +55,7 @@ class HomeScreen extends ConsumerWidget {
                 children: [
                   // App bar row
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
                     child: Row(
                       children: [
                         IconButton(
@@ -75,7 +75,15 @@ class HomeScreen extends ConsumerWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Search coming soon!'),
+                                behavior: SnackBarBehavior.floating,
+                                duration: Duration(seconds: 1),
+                              ),
+                            );
+                          },
                           icon: const Icon(Icons.search_rounded, color: Colors.white),
                         ),
                       ],
