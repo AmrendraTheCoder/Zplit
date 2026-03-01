@@ -1,3 +1,5 @@
+#ifdef _WIN32
+
 #include "flutter_window.h"
 
 #include <optional>
@@ -71,3 +73,5 @@ FlutterWindow::MessageHandler(HWND hwnd, UINT const message,
 
   return Win32Window::MessageHandler(hwnd, message, wparam, lparam);
 }
+
+#endif  // _WIN32

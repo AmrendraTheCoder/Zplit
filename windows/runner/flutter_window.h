@@ -1,6 +1,8 @@
 #ifndef RUNNER_FLUTTER_WINDOW_H_
 #define RUNNER_FLUTTER_WINDOW_H_
 
+#ifdef _WIN32
+
 #include <flutter/dart_project.h>
 #include <flutter/flutter_view_controller.h>
 
@@ -29,5 +31,7 @@ class FlutterWindow : public Win32Window {
   // The Flutter instance hosted by this window.
   std::unique_ptr<flutter::FlutterViewController> flutter_controller_;
 };
+
+#endif  // _WIN32
 
 #endif  // RUNNER_FLUTTER_WINDOW_H_
