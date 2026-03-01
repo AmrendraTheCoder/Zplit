@@ -16,7 +16,8 @@ class SettleUpPickerScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final group = ref.watch(groupsProvider)
+    final group = ref
+        .watch(groupsProvider)
         .where((g) => g.id == groupId)
         .firstOrNull;
     final user = ref.watch(currentUserProvider);
@@ -32,8 +33,9 @@ class SettleUpPickerScreen extends ConsumerWidget {
     }
 
     // Other members
-    final otherMemberIds =
-        group.memberIds.where((id) => id != user.id).toList();
+    final otherMemberIds = group.memberIds
+        .where((id) => id != user.id)
+        .toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -53,11 +55,16 @@ class SettleUpPickerScreen extends ConsumerWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.check_circle_outline_rounded,
-                      size: 64, color: accent.withValues(alpha: 0.4)),
+                  Icon(
+                    Icons.check_circle_outline_rounded,
+                    size: 64,
+                    color: accent.withValues(alpha: 0.4),
+                  ),
                   const SizedBox(height: 16),
-                  Text('No balances to settle!',
-                      style: Theme.of(context).textTheme.titleMedium),
+                  Text(
+                    'No balances to settle!',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
                 ],
               ),
             )
@@ -66,9 +73,9 @@ class SettleUpPickerScreen extends ConsumerWidget {
                 const SizedBox(height: 16),
                 Text(
                   'Who do you want to settle up with?',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w500,
-                      ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
                 ),
                 const SizedBox(height: 24),
                 Expanded(
@@ -80,18 +87,19 @@ class SettleUpPickerScreen extends ConsumerWidget {
                       final member = allUsers
                           .where((u) => u.id == memberId)
                           .firstOrNull;
-                      final displayName =
-                          member?.displayName ?? 'Member';
+                      final displayName = member?.displayName ?? 'Member';
                       final initial = displayName.isNotEmpty
                           ? displayName[0].toUpperCase()
                           : '?';
 
                       // Use PAIRWISE balance (not total group balance)
-                      final pairBalance = ref.watch(pairwiseBalanceProvider((
-                        userId: user.id,
-                        otherUserId: memberId,
-                        groupId: groupId,
-                      )));
+                      final pairBalance = ref.watch(
+                        pairwiseBalanceProvider((
+                          userId: user.id,
+                          otherUserId: memberId,
+                          groupId: groupId,
+                        )),
+                      );
 
                       // Skip members with zero balance
                       if (pairBalance.abs() < 0.01) {
@@ -100,36 +108,29 @@ class SettleUpPickerScreen extends ConsumerWidget {
 
                       // Positive = they owe you, Negative = you owe them
                       final isOwed = pairBalance > 0;
-                      final balanceLabel =
-                          isOwed ? 'Owes you' : 'You owe';
+                      final balanceLabel = isOwed ? 'Owes you' : 'You owe';
                       final balanceColor = isOwed
                           ? AppColors.moneyOwedTo
                           : AppColors.moneyOwed;
 
                       return GestureDetector(
-                        onTap: () => context.push(
-                          '/group/$groupId/settle-up/$memberId',
-                        ),
+                        onTap: () =>
+                            context.push('/group/$groupId/settle-up/$memberId'),
                         child: Container(
                           margin: const EdgeInsets.only(bottom: 12),
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: isDark
-                                ? AppColors.cardDark
-                                : Colors.white,
+                            color: isDark ? AppColors.cardDark : Colors.white,
                             borderRadius: BorderRadius.circular(14),
                             border: Border.all(
                               color: isDark
-                                  ? Colors.white
-                                      .withValues(alpha: 0.06)
-                                  : Colors.black
-                                      .withValues(alpha: 0.06),
+                                  ? Colors.white.withValues(alpha: 0.06)
+                                  : Colors.black.withValues(alpha: 0.06),
                             ),
                             boxShadow: [
                               if (!isDark)
                                 BoxShadow(
-                                  color: Colors.black
-                                      .withValues(alpha: 0.04),
+                                  color: Colors.black.withValues(alpha: 0.04),
                                   blurRadius: 8,
                                   offset: const Offset(0, 2),
                                 ),
@@ -139,10 +140,9 @@ class SettleUpPickerScreen extends ConsumerWidget {
                             children: [
                               CircleAvatar(
                                 radius: 22,
-                                backgroundColor: AppColors.avatarColors[
-                                    index %
-                                        AppColors
-                                            .avatarColors.length],
+                                backgroundColor:
+                                    AppColors.avatarColors[index %
+                                        AppColors.avatarColors.length],
                                 child: Text(
                                   initial,
                                   style: const TextStyle(
@@ -155,8 +155,7 @@ class SettleUpPickerScreen extends ConsumerWidget {
                               const SizedBox(width: 14),
                               Expanded(
                                 child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
                                       displayName,
@@ -164,22 +163,21 @@ class SettleUpPickerScreen extends ConsumerWidget {
                                           .textTheme
                                           .titleMedium
                                           ?.copyWith(
-                                              fontWeight:
-                                                  FontWeight.w600),
+                                            fontWeight: FontWeight.w600,
+                                          ),
                                     ),
                                     const SizedBox(height: 2),
                                     Text(
                                       member?.username ?? '',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall,
+                                      style: Theme.of(
+                                        context,
+                                      ).textTheme.bodySmall,
                                     ),
                                   ],
                                 ),
                               ),
                               Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
                                     balanceLabel,
@@ -191,7 +189,7 @@ class SettleUpPickerScreen extends ConsumerWidget {
                                   ),
                                   const SizedBox(height: 2),
                                   Text(
-                                    '₹ ${pairBalance.abs().toStringAsFixed(0)}',
+                                    '${group.currency} ${pairBalance.abs().toStringAsFixed(2)}',
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w800,

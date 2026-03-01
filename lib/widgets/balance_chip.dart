@@ -10,11 +10,7 @@ class BalanceChip extends StatelessWidget {
   final double balance;
   final String currency;
 
-  const BalanceChip({
-    super.key,
-    required this.balance,
-    required this.currency,
-  });
+  const BalanceChip({super.key, required this.balance, required this.currency});
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +24,14 @@ class BalanceChip extends StatelessWidget {
 
     if (balance > 0) {
       return _buildChip(
-        label: 'You are owed $currency${balance.toStringAsFixed(0)}',
+        label: 'You are owed $currency${balance.toStringAsFixed(2)}',
         color: AppColors.moneyOwedTo,
         context: context,
       );
     }
 
     return _buildChip(
-      label: 'You owe $currency${balance.abs().toStringAsFixed(0)}',
+      label: 'You owe $currency${balance.abs().toStringAsFixed(2)}',
       color: AppColors.moneyOwed,
       context: context,
     );
