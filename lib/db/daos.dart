@@ -17,9 +17,10 @@ class UserDao {
 
   /// Watch all users as a reactive stream.
   Stream<List<model.UserModel>> watchAllUsers() {
-    return _db.select(_db.users).watch().map(
-          (rows) => rows.map(_userFromRow).toList(),
-        );
+    return _db
+        .select(_db.users)
+        .watch()
+        .map((rows) => rows.map(_userFromRow).toList());
   }
 
   /// Get all users.
@@ -37,7 +38,9 @@ class UserDao {
 
   /// Insert or update a user.
   Future<void> upsertUser(model.UserModel user) async {
-    await _db.into(_db.users).insertOnConflictUpdate(
+    await _db
+        .into(_db.users)
+        .insertOnConflictUpdate(
           UsersCompanion.insert(
             id: user.id,
             username: user.username,
@@ -72,9 +75,10 @@ class GroupDao {
   GroupDao(this._db);
 
   Stream<List<model.GroupModel>> watchAllGroups() {
-    return _db.select(_db.groups).watch().map(
-          (rows) => rows.map(_groupFromRow).toList(),
-        );
+    return _db
+        .select(_db.groups)
+        .watch()
+        .map((rows) => rows.map(_groupFromRow).toList());
   }
 
   Future<List<model.GroupModel>> getAllGroups() async {
@@ -89,7 +93,9 @@ class GroupDao {
   }
 
   Future<void> upsertGroup(model.GroupModel group) async {
-    await _db.into(_db.groups).insertOnConflictUpdate(
+    await _db
+        .into(_db.groups)
+        .insertOnConflictUpdate(
           GroupsCompanion.insert(
             id: group.id,
             name: group.name,
@@ -102,8 +108,27 @@ class GroupDao {
         );
   }
 
+  /// Deletes a group and cascades to remove all associated expenses and splits.
   Future<void> deleteGroup(String id) async {
-    await (_db.delete(_db.groups)..where((t) => t.id.equals(id))).go();
+    await _db.transaction(() async {
+      // 1. Find all expenses belonging to this group
+      final groupExpenses = await (_db.select(
+        _db.expenses,
+      )..where((t) => t.groupId.equals(id))).get();
+
+      // 2. Delete splits for each expense
+      for (final expense in groupExpenses) {
+        await (_db.delete(
+          _db.splits,
+        )..where((t) => t.transactionId.equals(expense.id))).go();
+      }
+
+      // 3. Delete all expenses in this group
+      await (_db.delete(_db.expenses)..where((t) => t.groupId.equals(id))).go();
+
+      // 4. Delete the group itself
+      await (_db.delete(_db.groups)..where((t) => t.id.equals(id))).go();
+    });
   }
 
   model.GroupModel _groupFromRow(Group row) {
@@ -150,7 +175,9 @@ class ExpenseDao {
   }
 
   Future<void> upsertExpense(model.ExpenseModel expense) async {
-    await _db.into(_db.expenses).insertOnConflictUpdate(
+    await _db
+        .into(_db.expenses)
+        .insertOnConflictUpdate(
           ExpensesCompanion.insert(
             id: expense.id,
             groupId: expense.groupId,
@@ -172,8 +199,9 @@ class ExpenseDao {
   }
 
   Future<void> softDeleteExpense(String id) async {
-    await (_db.update(_db.expenses)..where((t) => t.id.equals(id)))
-        .write(const ExpensesCompanion(isDeleted: Value(true)));
+    await (_db.update(_db.expenses)..where((t) => t.id.equals(id))).write(
+      const ExpensesCompanion(isDeleted: Value(true)),
+    );
   }
 
   model.ExpenseModel _expenseFromRow(Expense row) {
@@ -195,8 +223,9 @@ class ExpenseDao {
       ),
       date: row.date,
       vectorClock: VectorClock(
-        (jsonDecode(row.vectorClock) as Map<String, dynamic>)
-            .map((k, v) => MapEntry(k, v as int)),
+        (jsonDecode(row.vectorClock) as Map<String, dynamic>).map(
+          (k, v) => MapEntry(k, v as int),
+        ),
       ),
       lastModifiedBy: row.lastModifiedBy,
       isDeleted: row.isDeleted,
@@ -216,16 +245,17 @@ class SplitDao {
 
   /// Watch splits for a transaction (excluding soft-deleted).
   Stream<List<model.SplitModel>> watchTransactionSplits(String transactionId) {
-    return (_db.select(_db.splits)
-          ..where((t) =>
-              t.transactionId.equals(transactionId) &
-              t.isDeleted.equals(false)))
+    return (_db.select(_db.splits)..where(
+          (t) =>
+              t.transactionId.equals(transactionId) & t.isDeleted.equals(false),
+        ))
         .watch()
         .map((rows) => rows.map(_splitFromRow).toList());
   }
 
   Future<List<model.SplitModel>> getSplitsForTransaction(
-      String transactionId) async {
+    String transactionId,
+  ) async {
     final query = _db.select(_db.splits)
       ..where((t) => t.transactionId.equals(transactionId));
     final rows = await query.get();
