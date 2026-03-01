@@ -1,1 +1,0 @@
-{"valid_import":true,"imports":[{"uri":"package:equatable/equatable.dart","transitive":false},{"uri":"package:zplit/models/expense_model.dart","transitive":false},{"uri":"package:zplit/models/split_model.dart","transitive":false}],"elements":[]}

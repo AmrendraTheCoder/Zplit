@@ -1,9 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:flutter_riverpod/flutter_riverpod.dart",
-    "package:zplit/db/database.dart",
-    "package:zplit/db/connection.dart",
-    "package:zplit/db/daos.dart"
-  ]
-}

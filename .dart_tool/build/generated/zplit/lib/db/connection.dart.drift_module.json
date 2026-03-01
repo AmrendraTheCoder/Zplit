@@ -1,7 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:zplit/db/database.dart",
-    "package:zplit/db/connection/native.dart"
-  ]
-}

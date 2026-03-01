@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/expense_model.dart';
 import '../theme/app_colors.dart';
+import '../theme/layout_tokens.dart';
 import 'package:intl/intl.dart';
 
 /// Expense tile — Splitwise-inspired card layout.
@@ -24,18 +25,23 @@ class ExpenseTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final tokens = Theme.of(context).extension<LayoutTokens>()!;
     final dateStr = DateFormat('MMMM d, y').format(expense.date);
-    final categoryColor = AppColors.categoryColors[expense.category.name] ??
+    final categoryColor =
+        AppColors.categoryColors[expense.category.name] ??
         AppColors.textTertiaryLight;
 
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-        padding: const EdgeInsets.all(14),
+        margin: EdgeInsets.symmetric(
+          horizontal: tokens.screenPadding.left,
+          vertical: tokens.spacingSm * 0.625,
+        ),
+        padding: tokens.tilePadding,
         decoration: BoxDecoration(
           color: isDark ? AppColors.cardDark : Colors.white,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(tokens.radiusMd * 0.875),
           border: Border.all(
             color: isDark
                 ? Colors.white.withValues(alpha: 0.06)
@@ -54,11 +60,11 @@ class ExpenseTile extends StatelessWidget {
           children: [
             // Category icon
             Container(
-              width: 46,
-              height: 46,
+              width: tokens.avatarRadius * 2.3,
+              height: tokens.avatarRadius * 2.3,
               decoration: BoxDecoration(
                 color: categoryColor.withValues(alpha: 0.12),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(tokens.radiusSm * 1.5),
               ),
               child: Center(
                 child: Text(
@@ -67,7 +73,7 @@ class ExpenseTile extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: tokens.spacingMd * 0.75),
 
             // Description + subtitle
             Expanded(
@@ -77,8 +83,8 @@ class ExpenseTile extends StatelessWidget {
                   Text(
                     expense.description,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
+                      fontWeight: FontWeight.w600,
+                    ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -91,8 +97,11 @@ class ExpenseTile extends StatelessWidget {
                       ),
                       if (expense.isDeleted) ...[
                         const SizedBox(width: 6),
-                        Icon(Icons.delete_outline,
-                            color: AppColors.textTertiaryLight, size: 14),
+                        Icon(
+                          Icons.delete_outline,
+                          color: AppColors.textTertiaryLight,
+                          size: 14,
+                        ),
                       ],
                     ],
                   ),
@@ -106,17 +115,17 @@ class ExpenseTile extends StatelessWidget {
               children: [
                 Text(
                   dateStr,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontSize: 10,
-                      ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodySmall?.copyWith(fontSize: 10),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   '$currency ${expense.totalAmount.toStringAsFixed(expense.totalAmount == expense.totalAmount.roundToDouble() ? 0 : 2)}',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.w800,
-                        fontSize: 18,
-                      ),
+                    fontWeight: FontWeight.w800,
+                    fontSize: 18,
+                  ),
                 ),
               ],
             ),

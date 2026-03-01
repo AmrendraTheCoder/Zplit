@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
+import '../theme/layout_tokens.dart';
 import '../models/group_model.dart';
 
 /// Premium group card for the home screen list.
@@ -40,9 +41,10 @@ class _GroupCardState extends State<GroupCard>
       vsync: this,
       duration: const Duration(milliseconds: 120),
     );
-    _scaleAnim = Tween<double>(begin: 1.0, end: 0.97).animate(
-      CurvedAnimation(parent: _tapController, curve: Curves.easeInOut),
-    );
+    _scaleAnim = Tween<double>(
+      begin: 1.0,
+      end: 0.97,
+    ).animate(CurvedAnimation(parent: _tapController, curve: Curves.easeInOut));
   }
 
   @override
@@ -56,16 +58,17 @@ class _GroupCardState extends State<GroupCard>
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final gradientIndex = widget.group.name.hashCode.abs() % _gradientPairs.length;
+    final tokens = Theme.of(context).extension<LayoutTokens>()!;
+    final gradientIndex =
+        widget.group.name.hashCode.abs() % _gradientPairs.length;
     final gradient = _gradientPairs[gradientIndex];
-    final emoji = _groupEmojis[widget.group.name.hashCode.abs() % _groupEmojis.length];
+    final emoji =
+        _groupEmojis[widget.group.name.hashCode.abs() % _groupEmojis.length];
 
     return AnimatedBuilder(
       animation: _scaleAnim,
-      builder: (context, child) => Transform.scale(
-        scale: _scaleAnim.value,
-        child: child,
-      ),
+      builder: (context, child) =>
+          Transform.scale(scale: _scaleAnim.value, child: child),
       child: GestureDetector(
         onTapDown: (_) => _tapController.forward(),
         onTapUp: (_) {
@@ -74,13 +77,16 @@ class _GroupCardState extends State<GroupCard>
         },
         onTapCancel: () => _tapController.reverse(),
         child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-          padding: const EdgeInsets.all(16),
+          margin: EdgeInsets.symmetric(
+            horizontal: tokens.screenPadding.left,
+            vertical: tokens.spacingSm * 0.75,
+          ),
+          padding: tokens.cardPadding,
           decoration: BoxDecoration(
             color: isDark
                 ? AppColors.cardDark.withValues(alpha: 0.7)
                 : AppColors.cardLight,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(tokens.radiusLg),
             border: Border.all(
               color: isDark
                   ? Colors.white.withValues(alpha: 0.08)
@@ -104,15 +110,15 @@ class _GroupCardState extends State<GroupCard>
             children: [
               // ── Gradient Avatar with Emoji ──────────
               Container(
-                width: 52,
-                height: 52,
+                width: tokens.avatarRadius * 2.6,
+                height: tokens.avatarRadius * 2.6,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: gradient,
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(tokens.radiusMd),
                   boxShadow: [
                     BoxShadow(
                       color: gradient[0].withValues(alpha: 0.3),
@@ -125,7 +131,7 @@ class _GroupCardState extends State<GroupCard>
                   child: Text(emoji, style: const TextStyle(fontSize: 24)),
                 ),
               ),
-              const SizedBox(width: 14),
+              SizedBox(width: tokens.spacingMd * 0.875),
 
               // ── Group Info ────────────────────────
               Expanded(
@@ -135,25 +141,35 @@ class _GroupCardState extends State<GroupCard>
                     Text(
                       widget.group.name,
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 17,
-                          ),
+                        fontWeight: FontWeight.w700,
+                        fontSize: 17,
+                      ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 4),
                     Row(
                       children: [
-                        Icon(Icons.people_outline_rounded, size: 14,
-                          color: isDark ? AppColors.textTertiaryDark : AppColors.textTertiaryLight),
-                        const SizedBox(width: 4),
+                        Icon(
+                          Icons.people_outline_rounded,
+                          size: tokens.iconSizeMd * 0.58,
+                          color: isDark
+                              ? AppColors.textTertiaryDark
+                              : AppColors.textTertiaryLight,
+                        ),
+                        SizedBox(width: tokens.spacingXs),
                         Text(
                           '${widget.group.memberCount}',
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                         const SizedBox(width: 10),
-                        Icon(Icons.receipt_long_outlined, size: 14,
-                          color: isDark ? AppColors.textTertiaryDark : AppColors.textTertiaryLight),
+                        Icon(
+                          Icons.receipt_long_outlined,
+                          size: 14,
+                          color: isDark
+                              ? AppColors.textTertiaryDark
+                              : AppColors.textTertiaryLight,
+                        ),
                         const SizedBox(width: 4),
                         Text(
                           '${widget.currency}${widget.totalSpent.toStringAsFixed(0)}',
@@ -185,7 +201,11 @@ class _GroupCardState extends State<GroupCard>
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.check_circle_outline, size: 14, color: AppColors.settled),
+            Icon(
+              Icons.check_circle_outline,
+              size: 14,
+              color: AppColors.settled,
+            ),
             const SizedBox(width: 4),
             Text(
               'settled',
