@@ -62,7 +62,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
         ? displayName.toLowerCase().replaceAll(' ', '_')
         : username;
 
-    ref.read(currentUserProvider.notifier).setupUser(
+    ref
+        .read(currentUserProvider.notifier)
+        .setupUser(
           username: finalUsername,
           displayName: displayName,
           avatarColorIndex: _selectedColor,
@@ -95,8 +97,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                       'SIGN UP',
                       style: TextStyle(
                         fontSize: 16,
-                        fontWeight:
-                            _isSignUp ? FontWeight.w800 : FontWeight.w500,
+                        fontWeight: _isSignUp
+                            ? FontWeight.w800
+                            : FontWeight.w500,
                         color: _isSignUp ? accent : AppColors.textTertiaryLight,
                       ),
                     ),
@@ -108,10 +111,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                       'LOGIN',
                       style: TextStyle(
                         fontSize: 16,
-                        fontWeight:
-                            !_isSignUp ? FontWeight.w800 : FontWeight.w500,
-                        color:
-                            !_isSignUp ? accent : AppColors.textTertiaryLight,
+                        fontWeight: !_isSignUp
+                            ? FontWeight.w800
+                            : FontWeight.w500,
+                        color: !_isSignUp
+                            ? accent
+                            : AppColors.textTertiaryLight,
                       ),
                     ),
                   ),
@@ -267,8 +272,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                     boxShadow: _selectedColor == index
                         ? [
                             BoxShadow(
-                              color: AppColors.avatarColors[index]
-                                  .withValues(alpha: 0.5),
+                              color: AppColors.avatarColors[index].withValues(
+                                alpha: 0.5,
+                              ),
                               blurRadius: 10,
                               offset: const Offset(0, 3),
                             ),
@@ -296,8 +302,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                 ),
                 elevation: 0,
               ),
-              child: const Text('Get Started',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+              child: const Text(
+                'Get Started',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+              ),
             ),
           ),
         ],
@@ -325,10 +333,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
         children: [
           _formLabel('Username'),
           const SizedBox(height: 6),
-          _formField(
-            controller: _usernameController,
-            hint: 'Your username',
-          ),
+          _formField(controller: _usernameController, hint: 'Your username'),
           const SizedBox(height: 20),
           _formLabel('Display Name'),
           const SizedBox(height: 6),
@@ -370,8 +375,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                     boxShadow: _selectedColor == index
                         ? [
                             BoxShadow(
-                              color: AppColors.avatarColors[index]
-                                  .withValues(alpha: 0.5),
+                              color: AppColors.avatarColors[index].withValues(
+                                alpha: 0.5,
+                              ),
                               blurRadius: 10,
                               offset: const Offset(0, 3),
                             ),
@@ -399,8 +405,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                 ),
                 elevation: 0,
               ),
-              child: const Text('Login',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+              child: const Text(
+                'Login',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+              ),
             ),
           ),
         ],
@@ -424,16 +432,29 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
     required String hint,
     bool obscure = false,
   }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return TextField(
       controller: controller,
       obscureText: obscure,
       textCapitalization: TextCapitalization.words,
+      style: TextStyle(
+        color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+        fontSize: 15,
+        fontWeight: FontWeight.w500,
+      ),
       decoration: InputDecoration(
         hintText: hint,
+        hintStyle: TextStyle(
+          color: isDark
+              ? AppColors.textTertiaryDark
+              : AppColors.textTertiaryLight,
+        ),
         filled: true,
-        fillColor: Colors.grey.shade100,
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        fillColor: isDark ? AppColors.surfaceDark : Colors.grey.shade100,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 14,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide.none,
@@ -470,9 +491,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
           ),
         ],
       ),
-      child: Center(
-        child: Icon(icon, color: color, size: 28),
-      ),
+      child: Center(child: Icon(icon, color: color, size: 28)),
     );
   }
 }

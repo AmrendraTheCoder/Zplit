@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 import '../providers/user_provider.dart';
 import '../providers/group_provider.dart';
 import '../providers/expense_provider.dart';
+import '../providers/expense_filter_provider.dart';
 import '../widgets/expense_tile.dart';
+import '../widgets/expense_filter_bar.dart';
 
 import '../theme/app_colors.dart';
 
@@ -18,10 +20,11 @@ class GroupDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final group = ref.watch(groupsProvider)
+    final group = ref
+        .watch(groupsProvider)
         .where((g) => g.id == groupId)
         .firstOrNull;
-    final expenses = ref.watch(groupExpensesProvider(groupId));
+    final expenses = ref.watch(filteredGroupExpensesProvider(groupId));
     final user = ref.watch(currentUserProvider);
     final allUsers = ref.watch(allUsersProvider);
     final _ = ref.watch(groupTotalProvider(groupId));
@@ -35,9 +38,9 @@ class GroupDetailScreen extends ConsumerWidget {
       );
     }
 
-    final userBalance = ref.watch(userGroupBalanceProvider(
-      (userId: user?.id ?? '', groupId: groupId),
-    ));
+    final userBalance = ref.watch(
+      userGroupBalanceProvider((userId: user?.id ?? '', groupId: groupId)),
+    );
 
     // Determine who the user owes / is owed by
     String balanceText;
@@ -73,8 +76,10 @@ class GroupDetailScreen extends ConsumerWidget {
                       children: [
                         IconButton(
                           onPressed: () => context.pop(),
-                          icon: const Icon(Icons.arrow_back_rounded,
-                              color: Colors.white),
+                          icon: const Icon(
+                            Icons.arrow_back_rounded,
+                            color: Colors.white,
+                          ),
                         ),
                         const Expanded(
                           child: Text(
@@ -89,9 +94,12 @@ class GroupDetailScreen extends ConsumerWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () => _showGroupOptions(context, ref, groupId),
-                          icon: const Icon(Icons.more_vert_rounded,
-                              color: Colors.white),
+                          onPressed: () =>
+                              _showGroupOptions(context, ref, groupId),
+                          icon: const Icon(
+                            Icons.more_vert_rounded,
+                            color: Colors.white,
+                          ),
                         ),
                       ],
                     ),
@@ -107,8 +115,11 @@ class GroupDetailScreen extends ConsumerWidget {
                       shape: BoxShape.circle,
                     ),
                     child: const Center(
-                      child: Icon(Icons.groups_rounded,
-                          color: Colors.white, size: 30),
+                      child: Icon(
+                        Icons.groups_rounded,
+                        color: Colors.white,
+                        size: 30,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -160,7 +171,8 @@ class GroupDetailScreen extends ConsumerWidget {
                             icon: Icons.handshake_outlined,
                             accent: accent,
                             filled: true,
-                            onTap: () => context.push('/group/$groupId/settle-up'),
+                            onTap: () =>
+                                context.push('/group/$groupId/settle-up'),
                           ),
                         ),
                         const SizedBox(width: 12),
@@ -170,7 +182,7 @@ class GroupDetailScreen extends ConsumerWidget {
                             icon: Icons.bar_chart_rounded,
                             accent: accent,
                             filled: false,
-                            onTap: () => _showBalances(context, ref, groupId, user?.id ?? '', allUsers, group.memberIds, accent, isDark),
+                            onTap: () => context.push('/group/$groupId/stats'),
                           ),
                         ),
                       ],
@@ -209,8 +221,8 @@ class GroupDetailScreen extends ConsumerWidget {
                           radius: 18,
                           backgroundColor: isCurrentUser
                               ? accent
-                              : AppColors.avatarColors[
-                                  index % AppColors.avatarColors.length],
+                              : AppColors.avatarColors[index %
+                                    AppColors.avatarColors.length],
                           child: Text(
                             displayName.isNotEmpty
                                 ? displayName[0].toUpperCase()
@@ -237,24 +249,32 @@ class GroupDetailScreen extends ConsumerWidget {
             ),
           ),
 
-          // ── Expenses List ───────────────────────────────
+          // ── Filter Bar + Expenses List ─────────────────
+          ExpenseFilterBar(groupId: groupId),
+
           Expanded(
             child: expenses.isEmpty
                 ? Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.receipt_long_outlined,
-                            size: 48,
-                            color: isDark
-                                ? AppColors.textTertiaryDark
-                                : AppColors.textTertiaryLight),
+                        Icon(
+                          Icons.receipt_long_outlined,
+                          size: 48,
+                          color: isDark
+                              ? AppColors.textTertiaryDark
+                              : AppColors.textTertiaryLight,
+                        ),
                         const SizedBox(height: 12),
-                        Text('No expenses yet',
-                            style: Theme.of(context).textTheme.titleMedium),
+                        Text(
+                          'No expenses yet',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
                         const SizedBox(height: 4),
-                        Text('Tap + to add your first expense',
-                            style: Theme.of(context).textTheme.bodySmall),
+                        Text(
+                          'Tap + to add your first expense',
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
                       ],
                     ),
                   )
@@ -266,10 +286,10 @@ class GroupDetailScreen extends ConsumerWidget {
                       final payer = expense.payerId == user?.id
                           ? 'You'
                           : (allUsers
-                                  .where((u) => u.id == expense.payerId)
-                                  .firstOrNull
-                                  ?.displayName ??
-                              'Someone');
+                                    .where((u) => u.id == expense.payerId)
+                                    .firstOrNull
+                                    ?.displayName ??
+                                'Someone');
                       return ExpenseTile(
                         expense: expense,
                         payerName: payer,
@@ -310,9 +330,7 @@ class GroupDetailScreen extends ConsumerWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon,
-                size: 16,
-                color: filled ? accent : Colors.white),
+            Icon(icon, size: 16, color: filled ? accent : Colors.white),
             const SizedBox(width: 6),
             Text(
               label,
@@ -328,7 +346,11 @@ class GroupDetailScreen extends ConsumerWidget {
     );
   }
 
-  static void _showGroupOptions(BuildContext context, WidgetRef ref, String groupId) {
+  static void _showGroupOptions(
+    BuildContext context,
+    WidgetRef ref,
+    String groupId,
+  ) {
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
@@ -352,7 +374,10 @@ class GroupDetailScreen extends ConsumerWidget {
             ListTile(
               leading: const Icon(Icons.share_outlined),
               title: const Text('Share Group'),
-              onTap: () => Navigator.pop(ctx),
+              onTap: () {
+                Navigator.pop(ctx);
+                context.push('/group/$groupId/share');
+              },
             ),
             const SizedBox(height: 8),
           ],
@@ -382,22 +407,25 @@ class GroupDetailScreen extends ConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Balances',
-                style: Theme.of(context).textTheme.headlineSmall),
+            Text('Balances', style: Theme.of(context).textTheme.headlineSmall),
             const SizedBox(height: 16),
             ...memberIds.where((id) => id != currentUserId).map((memberId) {
               final member = allUsers
                   .where((u) => u.id == memberId)
                   .firstOrNull;
               final name = member?.displayName ?? 'Member';
-              final balance = ref.read(pairwiseBalanceProvider((
-                userId: currentUserId,
-                otherUserId: memberId,
-                groupId: groupId,
-              )));
+              final balance = ref.read(
+                pairwiseBalanceProvider((
+                  userId: currentUserId,
+                  otherUserId: memberId,
+                  groupId: groupId,
+                )),
+              );
               final isOwed = balance > 0;
               final color = balance.abs() < 0.01
-                  ? (isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)
+                  ? (isDark
+                        ? AppColors.textSecondaryDark
+                        : AppColors.textSecondaryLight)
                   : (isOwed ? AppColors.moneyOwedTo : AppColors.moneyOwed);
               final label = balance.abs() < 0.01
                   ? 'settled up'
@@ -405,16 +433,22 @@ class GroupDetailScreen extends ConsumerWidget {
 
               return ListTile(
                 leading: CircleAvatar(
-                  backgroundColor: AppColors.avatarColors[
-                      memberIds.indexOf(memberId) % AppColors.avatarColors.length],
+                  backgroundColor:
+                      AppColors.avatarColors[memberIds.indexOf(memberId) %
+                          AppColors.avatarColors.length],
                   child: Text(
                     name.isNotEmpty ? name[0].toUpperCase() : '?',
                     style: const TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.w700),
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
                 title: Text(name),
-                subtitle: Text(label, style: TextStyle(color: color, fontSize: 12)),
+                subtitle: Text(
+                  label,
+                  style: TextStyle(color: color, fontSize: 12),
+                ),
                 trailing: Text(
                   '₹${balance.abs().toStringAsFixed(0)}',
                   style: TextStyle(

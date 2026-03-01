@@ -10,6 +10,9 @@ import '../screens/add_expense_screen.dart';
 import '../screens/settle_up_picker_screen.dart';
 import '../screens/settle_up_payment_screen.dart';
 import '../screens/settle_up_success_screen.dart';
+import '../screens/qr_share_screen.dart';
+import '../screens/qr_scan_screen.dart';
+import '../screens/group_stats_screen.dart';
 
 /// GoRouter configuration for Zplit navigation.
 ///
@@ -49,6 +52,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const SettingsScreen(),
       ),
       GoRoute(
+        path: '/scan',
+        name: 'qrScan',
+        builder: (context, state) => const QrScanScreen(),
+      ),
+      GoRoute(
         path: '/group/:id',
         name: 'groupDetail',
         builder: (context, state) {
@@ -71,6 +79,22 @@ final routerProvider = Provider<GoRouter>((ref) {
               final groupId = state.pathParameters['id']!;
               final expenseId = state.pathParameters['expenseId']!;
               return AddExpenseScreen(groupId: groupId, expenseId: expenseId);
+            },
+          ),
+          GoRoute(
+            path: 'share',
+            name: 'qrShare',
+            builder: (context, state) {
+              final groupId = state.pathParameters['id']!;
+              return QrShareScreen(groupId: groupId);
+            },
+          ),
+          GoRoute(
+            path: 'stats',
+            name: 'groupStats',
+            builder: (context, state) {
+              final groupId = state.pathParameters['id']!;
+              return GroupStatsScreen(groupId: groupId);
             },
           ),
           GoRoute(

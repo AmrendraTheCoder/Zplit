@@ -25,9 +25,9 @@ class HomeScreen extends ConsumerWidget {
     double totalOwed = 0;
     double totalOwing = 0;
     for (final group in groups) {
-      final balance = ref.watch(userGroupBalanceProvider(
-        (userId: user?.id ?? '', groupId: group.id),
-      ));
+      final balance = ref.watch(
+        userGroupBalanceProvider((userId: user?.id ?? '', groupId: group.id)),
+      );
       if (balance > 0) {
         totalOwed += balance;
       } else {
@@ -60,7 +60,10 @@ class HomeScreen extends ConsumerWidget {
                       children: [
                         IconButton(
                           onPressed: () => context.push('/settings'),
-                          icon: const Icon(Icons.menu_rounded, color: Colors.white),
+                          icon: const Icon(
+                            Icons.menu_rounded,
+                            color: Colors.white,
+                          ),
                         ),
                         const Expanded(
                           child: Text(
@@ -75,16 +78,11 @@ class HomeScreen extends ConsumerWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Search coming soon!'),
-                                behavior: SnackBarBehavior.floating,
-                                duration: Duration(seconds: 1),
-                              ),
-                            );
-                          },
-                          icon: const Icon(Icons.search_rounded, color: Colors.white),
+                          onPressed: () => context.push('/scan'),
+                          icon: const Icon(
+                            Icons.qr_code_scanner_rounded,
+                            color: Colors.white,
+                          ),
                         ),
                       ],
                     ),
@@ -166,7 +164,9 @@ class HomeScreen extends ConsumerWidget {
                   Container(
                     height: 36,
                     width: 1,
-                    color: isDark ? AppColors.dividerDark : AppColors.dividerLight,
+                    color: isDark
+                        ? AppColors.dividerDark
+                        : AppColors.dividerLight,
                   ),
                   _balanceColumn(
                     context,
@@ -177,7 +177,9 @@ class HomeScreen extends ConsumerWidget {
                   Container(
                     height: 36,
                     width: 1,
-                    color: isDark ? AppColors.dividerDark : AppColors.dividerLight,
+                    color: isDark
+                        ? AppColors.dividerDark
+                        : AppColors.dividerLight,
                   ),
                   _balanceColumn(
                     context,
@@ -227,9 +229,12 @@ class HomeScreen extends ConsumerWidget {
                     itemBuilder: (context, index) {
                       final group = groups[index];
                       final total = ref.watch(groupTotalProvider(group.id));
-                      final balance = ref.watch(userGroupBalanceProvider(
-                        (userId: user?.id ?? '', groupId: group.id),
-                      ));
+                      final balance = ref.watch(
+                        userGroupBalanceProvider((
+                          userId: user?.id ?? '',
+                          groupId: group.id,
+                        )),
+                      );
                       return GroupCard(
                         group: group,
                         totalSpent: total,
@@ -262,9 +267,9 @@ class HomeScreen extends ConsumerWidget {
           Text(
             label,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w500,
-                ),
+              fontSize: 11,
+              fontWeight: FontWeight.w500,
+            ),
           ),
           const SizedBox(height: 4),
           Text(
@@ -297,8 +302,10 @@ class HomeScreen extends ConsumerWidget {
               child: Icon(Icons.group_add_outlined, size: 40, color: accent),
             ),
             const SizedBox(height: 20),
-            Text('No groups yet',
-                style: Theme.of(context).textTheme.headlineSmall),
+            Text(
+              'No groups yet',
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
             const SizedBox(height: 8),
             Text(
               'Create a group to start splitting\nexpenses with friends',
